@@ -22,7 +22,11 @@ function my_dir($dir){
 	//注意这里要加一个@，不然会有warning错误提示：）
  		while(($file = readdir($handle)) !== false){
  			if($file != ".." && $file != "."){ //排除根目录；
- 				if(!is_dir($dir."/".$file)){
+ 				if(is_dir($dir."/".$file)){ 
+	 			//如果是子文件夹
+				
+				}
+				else{
 				//不然就将文件的名字存入数组
 				//存入数组前先去查json
 				//Check dictionary before saving it to the array
