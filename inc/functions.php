@@ -3,21 +3,24 @@
 Code by Sunplace
 Website:https://jsunplace.com
 Date:18/12/17
-Update:18/12/18
+Update:18/12/20
 */
 //字典初始化（用来处理php处理不了的中文）
 //Read JSON custom pinyin dictionary
-$json_string = file_get_contents('assets/js/dict.json');
+$json_string = file_get_contents('../assets/js/dict.json');
 $data = json_decode($json_string,true);
-//var_dump((array)$data); 
+$seed = $_POST["filter"];
+//var_dump($data); 
 //遍历本地文件
 //Traverse local files in a custom folder
-function my_dir($dir){
+function ls($dir,$filter){
+
 	$files = array();
 	for ($x = ord('A'); $x <= ord('Z'); $x++){
   		$files[chr($x)]=array();//初始化26个数组
 	}
 	$files["#"]=array();//初始化"#"
+$suffix='';
 	if(@$handle = opendir($dir)){
 	//注意这里要加一个@，不然会有warning错误提示：）
  		while(($file = readdir($handle)) !== false){
@@ -37,8 +40,14 @@ function my_dir($dir){
 							}
      					}
 					}
-
-		 				array_push($files[getfirstchar($temp)],$file);
+					//筛选
+					if($filter==null){
+						array_push($files[getfirstchar($temp)],$file);
+					}
+					else{
+					$suffix=substr($file,strrpos($file,'.')+1);
+					if($filter==fticon($suffix))array_push($files[getfirstchar($temp)],$file);
+					}
 
 					
 				}//end of else
@@ -46,14 +55,17 @@ function my_dir($dir){
 
  		}//end of while
 		if(count($files)>0){
-
+if(array_null($files)){echo '<div class="bg-warning" style="padding:1em;margin-top:1em;">
+<p class="text-center">目前没有<code>'.$filter.'</code>文件。</p>
+<p class="text-center"><small>Nothing.</small></p>
+</div>';}
 			foreach($files as $keys=>$vals){
 				if(count($files[$keys])>0)
 				{
 					echo '<h3>'.$keys.'</h3><ul>';
 					foreach($files[$keys] as $vals2){
 
-						echo '<li><a href="src/'.$vals2.'" target="_blank"><img class="ft-'.fticon(substr($vals2, strrpos($vals2, '.')+1)).'"/>'.
+						echo '<li><a href="../src/'.$vals2.'" target="_blank"><img class="ft-'.fticon(substr($vals2, strrpos($vals2, '.')+1)).'"/>'.
 
 							$vals2.'</a></li>';
 						echo '</ul>';
@@ -62,9 +74,9 @@ function my_dir($dir){
 				}
 
 			}
+}
 
 
- 		}
  		closedir($handle);
  	}
 	
@@ -126,7 +138,27 @@ return "xls";
 if($ft=="7z"||$ft=="tar"||$ft=="gz")//压缩包
 return "zip";
 //不存在
-if(!file_exists("assets/imgs/ft-".$ft.".svg")){return "unknown";}
+if(!file_exists("../assets/imgs/ft-".$ft.".svg")){return "unknown";}
 return $ft;
 }
+function array_null($arr){
+    if(is_array($arr)){
+     foreach($arr as $k=>$v){
+      if($v&&!is_array($v)){
+        return false;
+      }
+       $t=array_null($v);
+       if(!$t){
+         return false;
+       }
+     }
+     return true;
+     }else{
+       if(!$arr){
+         return true;
+       }
+       return false;
+     }
+  }
+ls('../src',$seed);
 ?>
