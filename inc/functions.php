@@ -3,7 +3,7 @@
 Code by Sunplace
 Website:https://jsunplace.com
 Date:18/12/17
-Update:18/12/20
+Update:18/12/21
 */
 //字典初始化（用来处理php处理不了的中文）
 //Read JSON custom pinyin dictionary
@@ -14,7 +14,8 @@ $seed = $_POST["filter"];
 //遍历本地文件
 //Traverse local files in a custom folder
 function ls($dir,$filter){
-
+	//如果src文件夹不存在，就创建。（可能会报Permission denied）
+	//if(!is_dir($dir)){mkdir($dir);}
 	$files = array();
 	for ($x = ord('A'); $x <= ord('Z'); $x++){
   		$files[chr($x)]=array();//初始化26个数组
@@ -22,7 +23,7 @@ function ls($dir,$filter){
 	$files["#"]=array();//初始化"#"
 $suffix='';
 	if(@$handle = opendir($dir)){
-	//注意这里要加一个@，不然会有warning错误提示：）
+	//注意这里要加一个@，不然会有warning错误提示:)
  		while(($file = readdir($handle)) !== false){
  			if($file != ".." && $file != "."){ //排除根目录；
  				if(!is_dir($dir."/".$file)){
@@ -56,7 +57,7 @@ $suffix='';
  		}//end of while
 		if(count($files)>0){
 if(array_null($files)){echo '<div class="bg-warning" style="padding:1em;margin-top:1em;">
-<p class="text-center">目前没有<code>'.$filter.'</code>文件。</p>
+<p class="text-center">这个分类下没有'.ftname($filter).'。</p>
 <p class="text-center"><small>Nothing.</small></p>
 </div>';}
 			foreach($files as $keys=>$vals){
@@ -129,6 +130,30 @@ if($ft=="jpg"||$ft=="gif"||$ft=="bmp"||$ft=="png"||$ft=="ico"||$ft=="svg")//图�
 return "img";
 if($ft=="mp4"||$ft=="avi"||$ft=="rmvb"||$ft=="mkv"||$ft=="mov"||$ft=="rm")//视频
 return "video";
+if($ft=="doc"||$ft=="docx"||$ft=="rtf")//doc
+return "doc";
+if($ft=="ppt"||$ft=="pptx")//ppt
+return "ppt";
+if($ft=="xls"||$ft=="xlsx")//xls
+return "xls";
+if($ft=="7z"||$ft=="tar"||$ft=="gz")//压缩包
+return "zip";
+//不存在
+if(!file_exists("../assets/imgs/ft-".$ft.".svg")){return "unknown";}
+return $ft;
+}
+function ftname($ft){
+if($ft=="apk")return "apk文件";
+if($ft=="zip")return "压缩文件";
+if($ft=="img")return "图像";
+if($ft=="video")return "视频";
+if($ft=="doc")return "Word文档";
+if($ft=="ppt")return "PowerPoint幻灯片";
+if($ft=="xls")return "Excel文档";
+if($ft=="pdf")return "pdf文档";
+if($ft=="txt")return "纯文本文件";
+return '后缀名未知的文件';
+
 if($ft=="doc"||$ft=="docx"||$ft=="rtf")//doc
 return "doc";
 if($ft=="ppt"||$ft=="pptx")//ppt

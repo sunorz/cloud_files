@@ -8,5 +8,5 @@ nav li:hover{background:#CCC;display:inline-block;}
 nav li img{height:1em;vertical-align:middle;margin-right:0.5em;}
 nav ul{overflow-y: scroll;max-height: 150px;display:none;border:solid #ccc 1px;background:#fff;}
 .in-select{display:inline-block;position:absolute;top:0;}
-.select{display:inline-block;margin-right:1em;cursor:pointer;}
+.select,.rs{display:inline-block;margin-right:1em;cursor:pointer;}
 nav{position:relative;}
