@@ -3,7 +3,7 @@
 Code by Sunplace
 Website:https://jsunplace.com
 Date:18/12/17
-Update:18/12/25
+Update:18/12/26
 function index：
 1) ls - 遍历文件夹文件，返回一个带索引首字母的二维数组。
 2) getfirstchar - 根据文件名返回索引首字母。
@@ -11,9 +11,11 @@ function index：
 4) ftname - 输入聚合类型，输出易读的中文（"img"->"图像"）。
 5) array_null - 输入数组，判断值是否空。
 6) pub - 输入文件的code，和配置文件config.txt的内的code比较，输出对应的文件名。call initconfig.
-7) getcode - 输入文件的sha1，输出code。--public
+7) getcode - 输入文件的sha1，输出code。
 8) trans_byte - 将文件大小的字节转换为易读的大小。
 9) initconfig - 生成配置文件src/config.txt，该文件用来存储code和文件名。
+10) pri - 生成配置文件src/config.txt，该文件用来存储code和文件名。call readconfig.
+11) readconfig - 输入文件的sha1和配置文件inc/data.php的内的sha1比较，输出文件名。
 */
 //字典初始化（用来处理php处理不了的中文）
 //Read JSON custom pinyin dictionary
@@ -77,7 +79,7 @@ if(array_null($files)){echo '<div class="bg-warning" style="padding:1em;margin-t
 
 						echo '<li><a href="../src/'.$vals2.'" target="_blank"><img class="ft-'.fticon(substr($vals2, strrpos($vals2, '.')+1)).'"/>'.
 
-							$vals2.'</a>&nbsp;<a href="/s/'.getcode(sha1_file("../src/".$vals2)).'" target="_blank"><i class="fa fa-chain"></i></a></li>';
+							$vals2.'</a>&nbsp;<a href="/s/'.getcode(sha1_file("../src/".$vals2),0).'" target="_blank"><i class="fa fa-chain"></i></a></li>';
 						echo '</ul>';
 	
 					}
@@ -201,7 +203,8 @@ function array_null($arr){
      }
   }
 
-/*6) 输入文件的code，和配置文件config.txt的内的code比较，输出对应的文件名。*/
+/*6) 输入文件的code，和配置文件src/config.txt的内的code比较，输出对应的文件名。*/
+//public
 function pub($str){
 if(!file_exists("../src/config.txt"))
 	initconfig();
@@ -222,21 +225,25 @@ echo '<a href="'.$url.'" type="button" class="btn btn-default"><i class="fa fa-d
 	}
 }
 
-/*7) 输入文件的sha1，输出code。--public*/
-function getcode($str){
+/*7) 输入文件的sha1，输出code。*/
+function getcode($str,$tag){
 		$str2="";
 		if(strlen($str)==40){
 			for($i=10;$i<40;$i++)
 			{
-				if($i%5==0){//从第1位，间隔5位取数
+				if($i%5==0){//从第10位，间隔5位取数
 					$str2.=substr($str,$i,1);
 				}
 			}
 		}	
-		$a=array("g","h","i","j","k","l","m","n","o","p");
+	if($tag==0){$a=array("g","h","i","j","k","l","m","n","o","p");}
+	else{$a=array("q","r","s","t","u","v","w","x","y","z");}
+	
+		
 		$keys=array_rand($a,1);
 		$keys2=array_rand($a,1);
 		$str2=substr($str2,0,2).$a[$keys].substr($str2,2,2).$a[$keys2].substr($str2,4);
+	if(strlen($str2)==2)$str2="";
 		return $str2;
 	}
 
@@ -284,7 +291,7 @@ if(@$handle = opendir("../src")){
  		while(($file = readdir($handle)) !== false){
  			if($file != ".." && $file != "."){ //排除根目录；
  				if(!is_dir("../src/".$file)){
-					$config.=getcode(sha1_file("../src/".$file)).",".$file.";\r\n";
+					$config.=getcode(sha1_file("../src/".$file),0).",".$file.";\r\n";
 				}
 			}
 		}
@@ -294,8 +301,71 @@ fwrite($myfile,$config);
 fclose($myfile);
 }
 
-/*10) 输入。*/
+/*10) 输入文件的code，和配置文件inc/data.php的内的code比较，输出对应信息。*/
+//private
+function pri($str){
+if(@$handle = opendir("../srcp")){
+	//注意这里要加一个@，不然会有warning错误提示:)
+ 		while(($file = readdir($handle)) !== false){
+ 			if($file != ".." && $file != "."){ //排除根目录；
+				//重命名
+				if(strrpos($file,".tar.gz")==strlen($file)-7){
+					//格式为tar.gz的要另外处理
+					$newfilename=substr(md5($file),0,8).".tar.gz";
+					if(date('H:i:s',time())=="00:00:00"||preg_match('/^[0-9a-f]{8}$/',substr($file,0,strrpos($file,".",-7)),$mc)==0)
+					{					
+						rename(iconv('UTF-8','GBK',"../srcp/".$file), iconv('UTF-8','GBK',"../srcp/".$newfilename));
+						$file=$newfilename;
+					}			
+					
+				}
+				else
+				{
+					$ext=substr($file,strrpos($file,"."));//后缀名带.
+					$newfilename=substr(md5($file),0,8).$ext;
+					if(date('H:i:s',time())=="00:00:00"||preg_match('/^[0-9a-f]{8}$/',substr($file,0,strrpos($file,".")),$mc)==0)
+					{					
+						rename(iconv('UTF-8','GBK',"../srcp/".$file), iconv('UTF-8','GBK',"../srcp/".$newfilename));
+						$file=$newfilename;
+					}					
+				}
+				//End of 重命名				
+				$bstr=getcode(sha1_file("../srcp/".$file),1);
+				$bstr=substr($bstr,0,2).substr($bstr,3,2).substr($bstr,6);
+				if($str==$bstr)
+				{
+					//var_dump($mc);
+					echo '<h1>';
+					if(readconfig(sha1_file("../srcp/".$file))==-1){
+						echo $file;
+					}
+					else
+					{
+						echo readconfig(sha1_file("../srcp/".$file));
+					}
+				
+					echo '</h1><center><img class="ftl-'.fticon(substr($file,strrpos($file,".")+1)).'"/></center>';
+					echo '<p><strong>SHA1</strong>&nbsp;&nbsp;'.sha1_file('../srcp/'.$file).'</p>';
+					echo '<p><strong>size</strong>&nbsp;&nbsp;'.trans_byte(filesize('../srcp/'.$file)).'</p>';
+					echo '<p><strong>最后修改时间：</strong>&nbsp;&nbsp;'.date('Y-m-d H:i:s',filemtime('../srcp/'.$file)).'</p>';
+					echo '<a href="../srcp/'.$file.'" type="button" class="btn btn-default"><i class="fa fa-download"></i>&nbsp;Download</a>';
+				}
+			}
+		}
+}
 
+}
+
+/*11) 输入文件的sha1和配置文件inc/data.php的内的sha1比较，输出文件名。*/
+function readconfig($sha1){
+	$config = file("../inc/data.php");
+	for($i=2;$i<count($config)-2;$i++)
+	{
+		$val = strtolower($config[$i]);
+		if($sha1==substr($val,0,40)){
+			return substr($val,strpos($val,",")+1);//文件名
+		}
+	}
+	return -1;
+}
 ?>
-</body>
-</html>

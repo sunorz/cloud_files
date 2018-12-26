@@ -43,8 +43,6 @@ if($_GET['fid']){
 	}
 }
 
-//private
-function pri($str){echo 'pri';}
 ?>
 </div>
 <script>
