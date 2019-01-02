@@ -49,7 +49,7 @@
 访问格式：  
 `/inc/index.php?key=value`  
 **inc/functions.php** *pri* 里的 `$key = 'value';` 要和**inc/ll.php** 里的 `$key = 'value';`一致。  
-需要 **PHP** 运行环境。    
+需要 **PHP** 和 **MySQL**。    
 `Copyright by Sunplace`    
 *2019/1/2*    
 [English](README.md) 
