@@ -15,7 +15,7 @@
 Code by Sunplace
 Website:https://jsunplace.com
 Date:18/12/22
-Update:18/12/25
+Update:18/12/29
 -->
 <div class="container">
 <?php
@@ -49,10 +49,11 @@ if($_GET['fid']){
 $(function(){
 	var str=$("img").attr("class");
 	$("img").attr('src','../assets/imgs/ft-'+str.substring(str.lastIndexOf("-")+1)+'.svg');
-$("button").click(function(){
 
 });
-
-});</script>
+	function gf(code){
+		alert(code);
+	}	
+</script>
 </body>
 </html>

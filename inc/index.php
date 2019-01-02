@@ -1,4 +1,9 @@
-﻿<!doctype html>
+﻿<?php
+if(!isset($_GET['key'])||$_GET['key']!="value"){//简单省事的免密码操作
+	die("???");
+}
+?>
+<!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -15,33 +20,25 @@
 Code by Sunplace
 Website:https://jsunplace.com
 Date:18/12/25
-Update:18/12/26
+Update:18/12/30
 -->
 <div class="container">
 <h1>获取链接</h1>
-<form class="form-horizontal">
-  <div class="form-group">
-    <label for="sha1file" class="col-sm-2 control-label">Enter SHA1</label>
-    <div class="col-sm-8">
-      <input type="text" class="form-control"  placeholder="Enter file SHA1 here.">
-    </div>
-	<div class="col-sm-2">
-      <input type="button" class="btn btn-default" value="GET">
-    </div>
-  </div>
-<form>
 <p class="res"></p>
 </div>
 <script src="../assets/js/main.js"></script>
 	<script>
 	$(function(){
-		$(".btn").click(function(){
-		$.post("ls.php",{sha1:$(".form-control").val()},function(result){
-			console.log(result);
-		$(".res").html(result);
+		
+		$.post("ls.php",{sha1:null,key:"value"},function(result){	//防止直接请求	
+		$(".res").html(result).find("img").each(function(){
+		var str = $(this).attr("class");
+		$(this).attr('src','../assets/imgs/ft-'+str.substring(str.lastIndexOf("-")+1)+'.svg');
+
 		});
-	});
 		});
+	})
+
 	</script>
 </body>
 </html>
