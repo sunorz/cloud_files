@@ -35,10 +35,15 @@
         <th>备注</th>
       </tr>
       <tr>
-        <td>uname</td>
+        <td>coln</td>
         <td>varchar(50)</td>
         <td>用户名</td>
-      </tr>           
+      </tr>
+            <tr>
+        <td>colp</td>
+        <td>varchar(32)</td>
+        <td>密码</td>
+      </tr>
     </table>
 </div>
 
@@ -47,9 +52,9 @@
 **inc/index.php**    
 用于列出私密文件的下载地址。  
 访问格式：  
-`/inc/index.php?key=value`  
+`/cpanel/index.php?key=value`  
 **inc/functions.php** *pri* 里的 `$key = 'value';` 要和**inc/ll.php** 里的 `$key = 'value';`一致。  
 需要 **PHP** 和 **MySQL**。    
 `Copyright by Sunplace`    
-*2019/1/2*    
+*2019/1/13*    
 [English](README.md) 

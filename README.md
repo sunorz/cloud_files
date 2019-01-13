@@ -36,21 +36,26 @@
         <th>REMARKS</th>
       </tr>
       <tr>
-        <td>uname</td>
+        <td>coln</td>
         <td>varchar(50)</td>
         <td>username</td>
+      </tr>
+      <tr>
+        <td>colp</td>
+        <td>varchar(32)</td>
+        <td>password</td>
       </tr>
     </table>
 </div>
 
 **inc/conn.php** 
 Connect to the database.  
-**inc/index.php**  
+**cpanel/index.php**  
 Used to list the download address of a private file.  
 Access format:  
-`/inc/index.php?key=value`  
+`/cpanel/index.php?key=value`  
 **inc/functions.php** `$key = 'value';` in *pri* is the same as `$key = 'value';` in **inc/ll.php**.  
 Requires **PHP** and **MySQL**.  
 `Copyright by Sunplace`  
-*2019/1/2*  
+*2019/1/13*  
 [中文版](README_zh-CN.md)
