@@ -3,19 +3,35 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DOWNLOAD</title>
-<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="../assets/fa/css/font-awesome.min.css">
-<link rel="stylesheet" href="../assets/css/main.css">
-<script src="../assets/js/jquery-3.1.1.min.js"></script>
-<script src="../assets/js/bootstrap.min.js"></script>
+<title>CPanel</title>
 </head>
+<link rel="stylesheet" href="../assets/materialize/css/materialize.min.css">	
+<link href="../assets/materialize/icon/iconfont/material-icons.css" rel="stylesheet">
+<script src="../assets/js/jquery-3.1.1.min.js"></script>
+<script src="../assets/js/md5.js"></script>
+<script src="../assets/materialize/js/materialize.min.js"></script>
+	<style>
+		.page-title{font-size:2em;}
+		img[class^=ftl-]{height: 150px;}
+	</style>
 <body>
+	<header> 
+
+        <nav class="top-nav  blue lighten-3" style="height: 122px;line-height: 122px;">	
+			<div class="nav-wrapper" style="padding-left: 1em;">
+				<div class="container">
+					<a class="page-title">dl.jsunplace.com</a>
+				</div>
+			</div>	
+		</nav>
+
+   </header>
+<main>
 <!--
 Code by Sunplace
 Website:https://jsunplace.com
 Date:18/12/22
-Update:18/12/29
+Update:19/1/2
 -->
 <div class="container">
 <?php
@@ -45,15 +61,14 @@ if($_GET['fid']){
 
 ?>
 </div>
+	</main>
+	<footer><div class="container center-align"><small>Copyright By Sunplace,2018-<script>document.write(new Date().getFullYear('Y'));</script></small></div></footer>
 <script>
 $(function(){
 	var str=$("img").attr("class");
 	$("img").attr('src','../assets/imgs/ft-'+str.substring(str.lastIndexOf("-")+1)+'.svg');
 
-});
-	function gf(code){
-		alert(code);
-	}	
+});	
 </script>
 </body>
 </html>

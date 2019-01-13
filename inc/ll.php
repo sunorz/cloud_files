@@ -1,15 +1,14 @@
-﻿<?php
+<?php
 /*
-Code by Sunplace
-Website:https://jsunplace.com
-Date:18/12/25
-Update:18/12/30
+Copyright by Sunplace
+CT:2018/12/25
+MT:2018/12/30
 */
 if(isset($_GET["pcode"])&&isset($_GET["token"])){
 	//SQL防止注入
 	if(preg_match('/^[0-9a-z]{8}$/',$_GET["pcode"],$mc)==0)die("???");
 	//下载私密文件
-	$key = 'key'; //秘钥 ，非常重要，不参与url传输、秘钥泄露将导致token验证失效
+	$key = 'AJJkendie0772'; //秘钥 ，非常重要，不参与url传输、秘钥泄露将导致token验证失效
 	$data['pcode'] = $_GET["pcode"];
 	$data['token']= md5( md5($key) . md5(date("Y-m-d-H",time())) );
 	if($data['token']==$_GET["token"]){

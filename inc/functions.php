@@ -1,9 +1,9 @@
-﻿<?php
+<?php
+define('__ROOT__', substr(dirname(__FILE__), 0, -4));
 /*
-Code by Sunplace
-Website:https://jsunplace.com
-Date:18/12/17
-Update:18/12/30
+Copyright by Sunplace
+CT:2018/12/17
+MT:2019/1/13
 function index：
 1) ls - 遍历文件夹文件，返回一个带索引首字母的二维数组。
 2) getfirstchar - 根据文件名返回索引首字母。
@@ -16,11 +16,12 @@ function index：
 9) initconfig - 数据库初始化。
 10) pri - 私密文件下载。call readconfig.
 11) readconfig - 读取数据库（私密）。
-12) initconfigp - 初始化私密数据库。
+12) initconfigp - 初始化数据库（私密）。
+13) ck - 用户认证。
 */
 //字典初始化（用来处理php处理不了的中文）
 //Read JSON custom pinyin dictionary
-$json_string = file_get_contents('../assets/js/dict.json');
+$json_string = file_get_contents(__ROOT__.'/assets/js/dict.json');
 $data = json_decode($json_string,true);
 //var_dump($data); 
 /*1) 遍历文件夹文件，返回一个带索引的二维数组。*/
@@ -35,7 +36,7 @@ function ls($dir,$filter){
 	}
 	$files["#"]=array();//初始化"#"
 	$suffix='';
-	require("../inc/conn.php");
+	require(__ROOT__."/inc/conn.php");
 	$query="select shcd,fn from flinfo where md5fn='0'";
 	global $data;
 
@@ -70,24 +71,25 @@ if(array_null($files)){echo '<div class="bg-warning" style="padding:1em;margin-t
 <p class="text-center">没有'.ftname($filter).'。</p>
 <p class="text-center"><small>Nothing.</small></p>
 </div>';}
+
 			foreach($files as $keys=>$vals){
 				if(!array_null($files[$keys]))
 				{
-					echo '<h3>'.$keys.'</h3><ul>';
+					echo '<ul class="collection with-header"><li class="collection-header"><a class="btn-floating btn waves-effect waves-light blue lighten-3">'.$keys.'</a></li>';
 					foreach($files[$keys] as $vals2){
-						if(file_exists("../src/".$vals2)){
-						echo '<li><a href="../src/'.$vals2.'" target="_blank"><img class="ft-'.fticon(substr($vals2, strrpos($vals2, '.')+1)).'"/>'.
+						if(file_exists(__ROOT__."/src/".$vals2)){
+						echo '<li class="collection-item"><a href="'.__ROOT__.'/src/'.$vals2.'" download="'.$vals2.'"><img class="ft-'.fticon(substr($vals2, strrpos($vals2, '.')+1)).'"/>'.$vals2.'</a><a href="/s/'.getcode(sha1_file(__ROOT__."/src/".$vals2),0).'" target="_blank" class="secondary-content"><i class="material-icons open" title="前往文件明细">open_in_new</i></a></li>';
 
-							$vals2.'</a>&nbsp;<a href="/s/'.getcode(sha1_file("../src/".$vals2),0).'" target="_blank"><i class="fa fa-chain"></i></a></li>';
-						echo '</ul>';
 					}
 						else{
 							//文件不存在，删除数据库中对应的内容
 							$query_del="delete from flinfo where fn like '".$vals2."' and md5fn='0'";
 							mysqli_query($con,$query_del);					
 						}
+												
 	
 					}
+					echo '</ul>';
 				}
 
 			}
@@ -158,12 +160,15 @@ return "xls";
 if($ft=="7z"||$ft=="tar"||$ft=="gz")//压缩包
 return "zip";
 //不存在
-if(!file_exists("../assets/imgs/ft-".$ft.".svg")){return "unknown";}
+if(!file_exists(__ROOT__."/assets/imgs/ft-".$ft.".svg")){return "unknown";}
 return $ft;
 }
 
 /*4) 输入聚合类型，输出易读的中文（"img"->"图像"）。*/
 function ftname($ft){
+	if($ft==null&&$ft==''){
+		return '任何公开的文件';
+	};
 if($ft=="apk")return "apk文件";
 if($ft=="zip")return "压缩文件";
 if($ft=="img")return "图像";
@@ -209,7 +214,7 @@ function array_null($arr){
      }
   }
 
-/*6) 输入文件的code，输出对应的文件名。call initconfig.*/
+/*6) 输入文件的code，和配置文件src/config.txt的内的code比较，输出对应的文件名。*/
 //public
 function pub($str){
 	require("../inc/conn.php");	
@@ -224,11 +229,11 @@ $file=$row[2];
 
 			$url='../src/'.$file;
 			$ext=substr($file,strrpos($file,'.')+1);//后缀名
-echo '<h1>'.$file.'</h1><center><img class="ftl-'.fticon($ext).'"/></center>';
+echo '<div class="row z-depth-2" style="padding: 1em;margin: 2em 0;"><div class="col s12"><h4>'.$file.'</h4><center><img class="ftl-'.fticon($ext).'"/></center>';
 echo '<p><strong>SHA1</strong>&nbsp;&nbsp;'.sha1_file('../src/'.$file).'</p>';
 echo '<p><strong>size</strong>&nbsp;&nbsp;'.trans_byte(filesize('../src/'.$file)).'</p>';
 echo '<p><strong>最后修改时间：</strong>&nbsp;&nbsp;'.date('Y-m-d H:i:s',filemtime('../src/'.$file)).'</p>';
-echo '<a href="'.$url.'" type="button" class="btn btn-default"><i class="fa fa-download"></i>&nbsp;Download</a>';
+echo '<center><a href="'.$url.'" type="button" class="waves-effect waves-light btn blue" download="'.$file.'"><i class="material-icons left">file_download</i>&nbsp;Download</a></center></div></div>';
 			return;
 }
 
@@ -329,7 +334,7 @@ if(@$handle = opendir("../src")){
 
 }
 
-/*10) 私密文件下载。call readconfig.*/
+/*10) 输入文件的code，和配置文件inc/data.php的内的code比较，输出对应信息。*/
 //private
 function pri($str){
 	require("../inc/conn.php");
@@ -345,14 +350,14 @@ $file=$row[1];
 			$url='../srcp/'.$file;
 			$ext=substr($file,strrpos($file,'.')+1);//后缀名
 			
-echo '<h1>'.$row[2].'</h1><center><img class="ftl-'.fticon($ext).'"/></center>';
+echo '<div class="row z-depth-2" style="padding: 1em;margin: 2em 0;"><div class="col s12"><h4>'.$row[2].'</h4><center><img class="ftl-'.fticon($ext).'"/></center>';
 echo '<p><strong>SHA1</strong>&nbsp;&nbsp;'.sha1_file('../srcp/'.$file).'</p>';
 echo '<p><strong>size</strong>&nbsp;&nbsp;'.trans_byte(filesize('../srcp/'.$file)).'</p>';
 echo '<p><strong>最后修改时间：</strong>&nbsp;&nbsp;'.date('Y-m-d H:i:s',filemtime('../srcp/'.$file)).'</p>';
-$key = 'key'; //秘钥 ，非常重要，不参与url传输、秘钥泄露将导致token验证失效
+$key = 'sunplace'; //秘钥 ，非常重要，不参与url传输、秘钥泄露将导致token验证失效
 $data['pcode'] = $row[0];
 $data['token']= md5( md5($key) . md5(date("Y-m-d-H",time())) );
-echo '<a href="http://'.$_SERVER['HTTP_HOST'].'/inc/ll.php?'.http_build_query($data).'"  type="button" class="btn btn-default"><i class="fa fa-download"></i>&nbsp;Download</a>';
+echo '<center><a href="http://'.$_SERVER['HTTP_HOST'].'/inc/ll.php?'.http_build_query($data).'"  type="button" class="waves-effect waves-light btn blue"><i class="material-icons left">file_download</i>Download</a></center></div>';
 			return;
 }
 
@@ -360,16 +365,16 @@ echo '<a href="http://'.$_SERVER['HTTP_HOST'].'/inc/ll.php?'.http_build_query($d
 
 }
 
-/*11) readconfig - 读取数据库（私密）。*/
+/*11) 输入文件的sha1和配置文件inc/data.php的内的sha1比较，输出文件名。*/
 function readconfig(){
 require("../inc/conn.php");
 $query="select * from flinfo where md5fn<>'0'";
 $result=mysqli_query($con,$query);
 	if(mysqli_num_rows($result)>0){
-		echo '<ul>';
+		echo '<ul class="collection with-header"><li class="collection-header"><a class="btn-floating btn waves-effect waves-light red lighten-3"><i class="material-icons">lock</i></a></li>';
 	while($row=mysqli_fetch_row($result)){
 		if(file_exists("../srcp/".$row[1])){
-		echo '<li><a href="http://'.$_SERVER['HTTP_HOST'].'/s/'.$row[0].'" target="_blank"><img class="ft-'.fticon(substr($row[1], strrpos($row[1], '.')+1)).'">'.$row[2].'</a>&nbsp;&nbsp;<a href="http://'.$_SERVER['HTTP_HOST'].'/s/'.$row[0].'" target="_blank"><i class="fa fa-chain"></i></a></li>';
+		echo '<li class="collection-item"><a href="http://'.$_SERVER['HTTP_HOST'].'/s/'.$row[0].'" download="'.$row[2].'"><img class="ft-'.fticon(substr($row[1], strrpos($row[1], '.')+1)).'">'.$row[2].'</a><a href="http://'.$_SERVER['HTTP_HOST'].'/s/'.$row[0].'" target="_blank" class="secondary-content"><i class="material-icons open" title="前往文件明细">open_in_new</i></a></li>';
 		}
 		else{
 			$query_del="delete from flinfo where md5fn='".$row[1]."'";
@@ -380,7 +385,7 @@ $result=mysqli_query($con,$query);
 		echo '</ul>';
 	}
 }
-/*12) 初始化私密数据库。*/
+/*12) 初始化数据库（私密）。*/
 function initconfigp(){	
 require("../inc/conn.php");
 //if(file_exists("../srcp/"))
@@ -453,4 +458,14 @@ if(@$handle = opendir("../srcp")){
 
 return true;
 }
+/*13) 用户认证。*/
+function ck($n,$p){
+	require(__ROOT__."/inc/conn.php");
+	$q="select coln from user where coln='".$n."' and colp='".$p."'";
+	if(mysqli_num_rows(mysqli_query($con,$q))>0){
+		return true;
+	}
+	return false;
+}
+
 ?>

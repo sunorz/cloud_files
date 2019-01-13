@@ -1,7 +1,12 @@
 <?php 
+/*
+Copyright by Sunplace
+CT:2018/12/27
+MT:2019/1/9
+*/
 if (!session_id()) session_start();
 date_default_timezone_set('Asia/Shanghai'); //set timezone
-$con = mysqli_connect("127.0.0.1","db_user","db_password","dbname");//连接数据库服务器
+$con = mysqli_connect("host","user","password","database");//连接数据库服务器
 if (!$con)
   {
   die('无法连接数据库: ' . mysql_error());
