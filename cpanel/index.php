@@ -2,7 +2,7 @@
 /*
 Copyright by Sunplace
 CT:2018/12/25
-MT:2019/1/13
+MT:2019/1/25
 */
 session_start();
 if(isset($_SESSION['name'])&&isset($_SESSION['password'])){
@@ -27,6 +27,7 @@ else{
 </head>
 <link rel="stylesheet" href="../assets/materialize/css/materialize.min.css">	
 <link href="../assets/materialize/icon/iconfont/material-icons.css" rel="stylesheet">
+<link href="../assets/css/fonts.css" rel="stylesheet">
 <script src="../assets/js/jquery-3.1.1.min.js"></script>
 <script src="../assets/js/md5.js"></script>
 <script src="../assets/materialize/js/materialize.min.js"></script>
@@ -45,13 +46,14 @@ else{
 		.in-select .collection{display: inline-block;height:200px;overflow-y: scroll; }
 		.in-select{display:none;float: right;}
 		.chip>img{border-radius:0;}
+		a.truncate{width:90%;display:inline-block;}
 	</style>
 <body>
 	<header> 
         <nav class="top-nav  blue lighten-3" style="height: 60px;line-height: 60px;">	
 			<div class="nav-wrapper" style="padding-left: 1em;">
 				<div class="container">
-					<a class="page-title">CPANEL</a>					    
+					<a class="page-title">CPANEL</a>					
 				</div>
 			</div>				 
 		</nav>

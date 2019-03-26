@@ -2,15 +2,14 @@
 /*
 Copyright by Sunplace
 CT:2019/1/7
-MT:20119/1/9
+MT:2019/3/20
 */
+$t=$_COOKIE['type'];
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
         header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
         header("Cache-Control: no-store, no-cache, must-revalidate");
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");
-
-
         if ( !empty($_REQUEST[ 'debug' ]) ) {
             $random = rand(0, intval($_REQUEST[ 'debug' ]) );
             if ( $random === 0 ) {
@@ -18,7 +17,6 @@ header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
                 exit;
             }
         }
-
         // header("HTTP/1.0 500 Internal Server Error");
         // exit;
         // 5 minutes execution time
@@ -27,8 +25,15 @@ header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
         // usleep(5000);
         // Settings
         // $targetDir = ini_get("upload_tmp_dir") . '/' . "plupload";
+
         $targetDir = '../s/tmp';
-        $uploadDir = '../src';
+
+		switch($t){
+		case "pub":$uploadDir = '../src';break;
+		case "pri":$uploadDir = '../srcp';break;
+		default:$uploadDir = '../src';break;
+		}
+        var_dump($_REQUEST);
         $cleanupTargetDir = true; // Remove old files
         $maxFileAge = 5 * 3600; // Temp file age in seconds
         // Create target dir
@@ -131,10 +136,7 @@ header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
             $response = [
                 'success'=>true,
                 'oldName'=>$oldName,
-                'filePaht'=>$uploadPath,
-                'fileSize'=>$data['size'],
-                'fileSuffixes'=>$pathInfo['extension'],
-                'file_id'=>$data['id'],
+                'filePath'=>$uploadPath
                 ];
 
             die(json_encode($response));

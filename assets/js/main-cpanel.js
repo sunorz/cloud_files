@@ -47,6 +47,7 @@ $(function(){
 	});
 function init(){
 			$("#content1-list").html('<div class="preloader-wrapper active" >   <div class="spinner-layer spinner-blue-only">      <div class="circle-clipper left"><div class="circle"></div>     </div><div class="gap-patch">        <div class="circle"></div>     </div><div class="circle-clipper right"> <div class="circle"></div>    </div>   </div>  </div>载入中...</div>');
+			
 $.post("../inc/ll.php",{filter:null},function(result){
 		$("#content1-list").html(result).find("img").each(function(){
 		var str = $(this).attr("class");
@@ -82,3 +83,7 @@ function logout(){
     }
     window.onresize=function(){ setIframeHeight();}
     $(function(){setIframeHeight();});
+	$(".tab:eq(1)").click(function(){
+		console.log("ok");
+		$("#content2-list").html('<div class="preloader-wrapper active" >   <div class="spinner-layer spinner-blue-only">      <div class="circle-clipper left"><div class="circle"></div>     </div><div class="gap-patch">        <div class="circle"></div>     </div><div class="circle-clipper right"> <div class="circle"></div>    </div>   </div>  </div>载入中...</div>');
+	});

@@ -1,29 +1,30 @@
 <!--Copyright by Sunplace
 CT:2018/12/16
-MT:2019/1/13
+MT:2019/3/5
 -->
 <!doctype html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MD</title>
+<title>CloudStorage</title>
 </head>
 <link rel="stylesheet" href="assets/materialize/css/materialize.min.css">	
 <link href="assets/materialize/icon/iconfont/material-icons.css" rel="stylesheet">
+<link href="assets/css/fonts.css" rel="stylesheet">
 <script src="assets/js/jquery-3.1.1.min.js"></script>
 <script src="assets/js/md5.js"></script>
 <script src="assets/materialize/js/materialize.min.js"></script>
-	<style>
-		.page-title{font-size:2em;}
-	</style>
+<style>		
+.page-title{font-size:2em;}
+</style>
 <body>
 	<header> 
 
         <nav class="top-nav  blue lighten-3" style="height: 122px;line-height: 122px;">	
 			<div class="nav-wrapper" style="padding-left: 1em;">
 				<div class="container">
-					<a class="page-title">dl.jsunplace.com</a>
+					<a class="page-title" href="/"><script>var uri=window.location.host;document.write(uri);</script></a>
 				</div>
 			</div>	
 		</nav>
@@ -38,8 +39,9 @@ MT:2019/1/13
 	session_start();
 	if(isset($_SESSION['name'])&&isset($_SESSION['password'])){
 	$n=$_SESSION['name'];
-	$p=md5($_SESSION['password'].'54h7845');
+	$p=md5($_SESSION['password'].'CONFUSED_STRING');
 	require('inc/functions.php');
+		//initconfig();
 	if(ck($n,$p)){
 		?>
         <div class="col s12 blue lighten-5" style="position: relative;">
@@ -82,7 +84,7 @@ MT:2019/1/13
       </div>
 	</div>
 </main>
-	<footer><div class="container center-align"><small>Copyright By Sunplace,2018-<script>document.write(new Date().getFullYear('Y'));</script></small></div></footer>
+	<footer><div class="container center-align"><i class="material-icons tiny">hotel</i>&nbsp;<small><a href="changelogs.html">Changelogs</a>&nbsp;Copyright By Sunplace,2018-<script>document.write(new Date().getFullYear('Y'));</script></small></div></footer>
 	<script src="assets/js/main-index.js"></script>
 </body>
 </html>

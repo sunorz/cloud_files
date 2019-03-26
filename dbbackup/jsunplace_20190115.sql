@@ -35,8 +35,6 @@ CREATE TABLE `flinfo` (
 -- Dumping data for table `flinfo`
 --
 
-
-
 --
 -- Table structure for table `user`
 --
@@ -65,4 +63,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-13 10:17:33
+-- Dump completed on 2019-01-15 14:18:27

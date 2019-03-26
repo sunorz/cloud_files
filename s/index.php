@@ -3,16 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CPanel</title>
+<title>File details</title>
 </head>
 <link rel="stylesheet" href="../assets/materialize/css/materialize.min.css">	
 <link href="../assets/materialize/icon/iconfont/material-icons.css" rel="stylesheet">
+<link href="../assets/css/fonts.css" rel="stylesheet">
 <script src="../assets/js/jquery-3.1.1.min.js"></script>
 <script src="../assets/js/md5.js"></script>
 <script src="../assets/materialize/js/materialize.min.js"></script>
 	<style>
 		.page-title{font-size:2em;}
-		img[class^=ftl-]{height: 150px;}
+		img[class^=ftl-]{height: 150px;}		
 	</style>
 <body>
 	<header> 
@@ -20,7 +21,7 @@
         <nav class="top-nav  blue lighten-3" style="height: 122px;line-height: 122px;">	
 			<div class="nav-wrapper" style="padding-left: 1em;">
 				<div class="container">
-					<a class="page-title">dl.jsunplace.com</a>
+					<a class="page-title" href="/"><script>var uri=window.location.host;document.write(uri);</script></a>
 				</div>
 			</div>	
 		</nav>
@@ -31,7 +32,7 @@
 Code by Sunplace
 Website:https://jsunplace.com
 Date:18/12/22
-Update:19/1/2
+Update:19/2/19
 -->
 <div class="container">
 <?php

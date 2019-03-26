@@ -1,9 +1,10 @@
 <?php
 define('__ROOT__', substr(dirname(__FILE__), 0, -4));
+
 /*
 Copyright by Sunplace
 CT:2018/12/17
-MT:2019/1/13
+MT:2019/3/14
 function index：
 1) ls - 遍历文件夹文件，返回一个带索引首字母的二维数组。
 2) getfirstchar - 根据文件名返回索引首字母。
@@ -54,6 +55,7 @@ function ls($dir,$filter){
 		}
 							//筛选
 					if($filter==null){
+						if(isset($files[getfirstchar($temp)]))
 						array_push($files[getfirstchar($temp)],$row[1]);
 					}
 					else{
@@ -67,7 +69,7 @@ function ls($dir,$filter){
 
 
 if(count($files)>0){
-if(array_null($files)){echo '<div class="bg-warning" style="padding:1em;margin-top:1em;">
+if(array_null($files)){echo '<div class="red-text" style="padding:1em;margin-top:1em;">
 <p class="text-center">没有'.ftname($filter).'。</p>
 <p class="text-center"><small>Nothing.</small></p>
 </div>';}
@@ -78,7 +80,7 @@ if(array_null($files)){echo '<div class="bg-warning" style="padding:1em;margin-t
 					echo '<ul class="collection with-header"><li class="collection-header"><a class="btn-floating btn waves-effect waves-light blue lighten-3">'.$keys.'</a></li>';
 					foreach($files[$keys] as $vals2){
 						if(file_exists(__ROOT__."/src/".$vals2)){
-						echo '<li class="collection-item"><a href="'.__ROOT__.'/src/'.$vals2.'" download="'.$vals2.'"><img class="ft-'.fticon(substr($vals2, strrpos($vals2, '.')+1)).'"/>'.$vals2.'</a><a href="/s/'.getcode(sha1_file(__ROOT__."/src/".$vals2),0).'" target="_blank" class="secondary-content"><i class="material-icons open" title="前往文件明细">open_in_new</i></a></li>';
+						echo '<li class="collection-item"><a href="/src/'.$vals2.'" download="'.$vals2.'" class="truncate"><img class="ft-'.fticon(substr($vals2, strrpos($vals2, '.')+1)).'"/>'.$vals2.'</a><a href="/s/'.getcode(sha1_file(__ROOT__."/src/".$vals2),0).'" target="_blank" class="secondary-content"><i class="material-icons open" title="前往文件明细">open_in_new</i></a></li>';
 
 					}
 						else{
@@ -121,7 +123,7 @@ $asc = ord($s{0}) * 256 + ord($s{1}) - 65536;
     if($asc >= -18526 and $asc <= -18240) return "F";
     if($asc >= -18239 and $asc <= -17923) return "G";
     if($asc >= -17922 and $asc <= -17418) return "H";
-    if($asc >= -17922 and $asc <= -17418) return "I";
+
     if($asc >= -17417 and $asc <= -16475) return "J";
     if($asc >= -16474 and $asc <= -16213) return "K";
     if($asc >= -16212 and $asc <= -15641) return "L";
@@ -229,8 +231,8 @@ $file=$row[2];
 
 			$url='../src/'.$file;
 			$ext=substr($file,strrpos($file,'.')+1);//后缀名
-echo '<div class="row z-depth-2" style="padding: 1em;margin: 2em 0;"><div class="col s12"><h4>'.$file.'</h4><center><img class="ftl-'.fticon($ext).'"/></center>';
-echo '<p><strong>SHA1</strong>&nbsp;&nbsp;'.sha1_file('../src/'.$file).'</p>';
+echo '<div class="row z-depth-2" style="padding: 1em;margin: 2em 0;"><div class="col s12"><h4 style="word-break: break-all;">'.$file.'</h4><center><img class="ftl-'.fticon($ext).'"/></center>';
+echo '<p style="word-break: break-all;"><strong>SHA1</strong>&nbsp;&nbsp;'.sha1_file('../src/'.$file).'</p>';
 echo '<p><strong>size</strong>&nbsp;&nbsp;'.trans_byte(filesize('../src/'.$file)).'</p>';
 echo '<p><strong>最后修改时间：</strong>&nbsp;&nbsp;'.date('Y-m-d H:i:s',filemtime('../src/'.$file)).'</p>';
 echo '<center><a href="'.$url.'" type="button" class="waves-effect waves-light btn blue" download="'.$file.'"><i class="material-icons left">file_download</i>&nbsp;Download</a></center></div></div>';
@@ -247,7 +249,7 @@ function getcode($str,$tag){
 		if(strlen($str)==40){
 			for($i=10;$i<40;$i++)
 			{
-				if($i%5==0){//从第10位，间隔5位取数
+				if(($i+1)%5==0){//从第10位，间隔5位取数
 					$str2.=substr($str,$i,1);
 				}
 			}
@@ -301,38 +303,51 @@ function trans_byte($byte)
 
 /*9) 数据库初始化。*/
 function initconfig(){
-require("../inc/conn.php");
-
-if(@$handle = opendir("../src")){
+	set_time_limit(0);
+	$fa = array();
+	if(@$handle = opendir(__ROOT__."/src")){
 	//注意这里要加一个@，不然会有warning错误提示:)
  		while(($file = readdir($handle)) !== false){
  			if($file != ".." && $file != "."){ //排除根目录；
- 				if(!is_dir("../src/".$file)){
-					//查询数据库
-					$query_sel = "select fn from flinfo where md5fn='0'";
-					$result_sel = mysqli_query($con,$query_sel);
-					$flag=0;
-					while($row_sel=mysqli_fetch_row($result_sel))
-					{
-						if($row_sel[0]==$file){
-							mysqli_query($con,"update flinfo set shcd='".getcode(sha1_file("../src/".$file),0)."' where fn='".$file."'");
-							$flag=1;
-							break;
-						}
-					}
-					if($flag==0)
-					{
-					$query='insert into flinfo values ("'.getcode(sha1_file("../src/".$file),0).'","0","'.$file.'")';
-
-					mysqli_query($con,$query);
-					}
-
-				}
+				
+				//$str=getcode(sha1_file(__ROOT__.'/src/'.$file),0);
+				//$fa[substr($str,0,2).substr($str,3,2).substr($str,6)]=$file;//sha1：6位
+				array_push($fa,$file);
+					
 			}
 		}
+	}
+	//echo "<pre>fa=";print_r($fa);echo "<pre>";
+require(__ROOT__."/inc/conn.php");
+$query_sel ="select shcd,fn from flinfo where md5fn='0'";
+$result_sel = mysqli_query($con,$query_sel);
+$fb=array();
+while($row= mysqli_fetch_row($result_sel)){
+	//$fb[substr($row[0],0,2).substr($row[0],3,2).substr($row[0],6)]=$row[1];
+	if (in_array($row[1], $fa))
+	{
+		array_push($fb,$row[1]);
+		//update
+	}
+	else
+	{
+		mysqli_query($con,"delete from flinfo where fn='".$row[1]."'");
+		//delete
+	}		
 }
+$gti=array_diff($fa,$fb);
+	foreach($gti as $gk=>$gv)
+	{
+		$query_ins="insert into flinfo values ('".getcode(sha1_file(__ROOT__."/src/".$gv),0)."','0','".$gv."')";
+		mysqli_query($con,$query_ins);
+	}
+	//echo "<pre>fb=";print_r($fb);echo "<pre>";
+	//echo "<pre>fa-fb=";print_r(array_diff($fa,$fb));echo "<pre>";
+	
+		}
 
-}
+
+
 
 /*10) 输入文件的code，和配置文件inc/data.php的内的code比较，输出对应信息。*/
 //private
@@ -350,14 +365,14 @@ $file=$row[1];
 			$url='../srcp/'.$file;
 			$ext=substr($file,strrpos($file,'.')+1);//后缀名
 			
-echo '<div class="row z-depth-2" style="padding: 1em;margin: 2em 0;"><div class="col s12"><h4>'.$row[2].'</h4><center><img class="ftl-'.fticon($ext).'"/></center>';
-echo '<p><strong>SHA1</strong>&nbsp;&nbsp;'.sha1_file('../srcp/'.$file).'</p>';
+echo '<div class="row z-depth-2" style="padding: 1em;margin: 2em 0;"><div class="col s12"><h4 style="word-break: break-all;">'.$row[2].'</h4><center><img class="ftl-'.fticon($ext).'"/></center>';
+echo '<p style="word-break: break-all;"><strong>SHA1</strong>&nbsp;&nbsp;'.sha1_file('../srcp/'.$file).'</p>';
 echo '<p><strong>size</strong>&nbsp;&nbsp;'.trans_byte(filesize('../srcp/'.$file)).'</p>';
 echo '<p><strong>最后修改时间：</strong>&nbsp;&nbsp;'.date('Y-m-d H:i:s',filemtime('../srcp/'.$file)).'</p>';
 $key = 'sunplace'; //秘钥 ，非常重要，不参与url传输、秘钥泄露将导致token验证失效
 $data['pcode'] = $row[0];
 $data['token']= md5( md5($key) . md5(date("Y-m-d-H",time())) );
-echo '<center><a href="http://'.$_SERVER['HTTP_HOST'].'/inc/ll.php?'.http_build_query($data).'"  type="button" class="waves-effect waves-light btn blue"><i class="material-icons left">file_download</i>Download</a></center></div>';
+echo '<center><a href="//'.$_SERVER['HTTP_HOST'].'/inc/ll.php?'.http_build_query($data).'"  type="button" class="waves-effect waves-light btn blue"><i class="material-icons left">file_download</i>Download</a></center></div>';
 			return;
 }
 
@@ -374,7 +389,7 @@ $result=mysqli_query($con,$query);
 		echo '<ul class="collection with-header"><li class="collection-header"><a class="btn-floating btn waves-effect waves-light red lighten-3"><i class="material-icons">lock</i></a></li>';
 	while($row=mysqli_fetch_row($result)){
 		if(file_exists("../srcp/".$row[1])){
-		echo '<li class="collection-item"><a href="http://'.$_SERVER['HTTP_HOST'].'/s/'.$row[0].'" download="'.$row[2].'"><img class="ft-'.fticon(substr($row[1], strrpos($row[1], '.')+1)).'">'.$row[2].'</a><a href="http://'.$_SERVER['HTTP_HOST'].'/s/'.$row[0].'" target="_blank" class="secondary-content"><i class="material-icons open" title="前往文件明细">open_in_new</i></a></li>';
+		echo '<li class="collection-item"><a href="//'.$_SERVER['HTTP_HOST'].'/s/'.$row[0].'" class="truncate"><img class="ft-'.fticon(substr($row[1], strrpos($row[1], '.')+1)).'">'.$row[2].'</a><a href="//'.$_SERVER['HTTP_HOST'].'/s/'.$row[0].'" target="_blank" class="secondary-content"><i class="material-icons open" title="前往文件明细">open_in_new</i></a></li>';
 		}
 		else{
 			$query_del="delete from flinfo where md5fn='".$row[1]."'";
@@ -384,70 +399,53 @@ $result=mysqli_query($con,$query);
 	}
 		echo '</ul>';
 	}
+	else{
+		echo '<div class="red-text" style="padding:1em;margin-top:1em;">
+<p class="text-center">没有文件。</p>
+<p class="text-center"><small>Nothing.</small></p>
+</div>';
+	}
 }
 /*12) 初始化数据库（私密）。*/
 function initconfigp(){	
 require("../inc/conn.php");
 //if(file_exists("../srcp/"))
-//mkdir("../scrp");
+//mkdir("../srcp");
 if(@$handle = opendir("../srcp")){
 	//注意这里要加一个@，不然会有warning错误提示:)
  		while(($file = readdir($handle)) !== false){
  			if($file != ".." && $file != "."){ //排除根目录；
- 				if(!is_dir("../srcp/".$file)){
-					$ext=substr($file,strrpos($file,"."));//后缀名带.
-					$oldfile=$file;//旧的文件名
-					$newfilename=substr(md5($file),0,8).$ext;
-				//重命名 有问题
+ 				if(!is_dir("../srcp/".$file)){					
+				//重命名
 				if(strrpos($file,".tar.gz")==strlen($file)-7){
-					//格式为tar.gz的要另外处理					
-					if(date('H:i:s',time())=="00:00:00"||preg_match('/^[0-9a-z]{8}$/',substr($file,0,strrpos($file,".",-7)),$mc)==0)
-					{					
-						rename(iconv('UTF-8','GBK',"../srcp/".$file), iconv('UTF-8','GBK',"../srcp/".$newfilename));
-						$file=$newfilename;
-					}			
-					
+					$fdname=substr($file,0,strlen($file)-7);
+					$ext='.tar.gz';//后缀名带.				
 				}
 				else
-				{
-					if(date('H:i:s',time())=="00:00:00"||preg_match('/^[0-9a-z]{8}$/',substr($file,0,strrpos($file,".")),$mc)==0)
-					{					
-						rename(iconv('UTF-8','GBK',"../srcp/".$file), iconv('UTF-8','GBK',"../srcp/".$newfilename));
-						$file=$newfilename;
-					}					
+				{					
+					$ext=substr($file,strrpos($file,"."));//后缀名带.
+					$fdname=substr($file,0,0-strlen($ext));
 				}
-				//End of 重命名	
-					//查询数据库
-					$query_sel = "select shcd,fn from flinfo where md5fn<>'0'";
-					$result_sel = mysqli_query($con,$query_sel);
-					$precode=getcode(sha1_file("../srcp/".$file),1);//8:12a45b78
-					$precode2=substr($precode,0,7).substr(filectime("../srcp/".$file),-1);//8:12a45b7x
-					$precode=substr($precode2,0,2).substr($precode2,3,2).substr($precode2,6);//6:12457x
-						if(mysqli_num_rows($result_sel)>0){
-					while($row_sel=mysqli_fetch_row($result_sel))
-					{		
-						$dbcode=substr($row_sel[0],0,2).substr($row_sel[0],3,2).substr($row_sel[0],6);
-						if($dbcode==$precode){
-							$strud="update flinfo set md5fn='".$file."' where shcd='".$precode2."'";
-							if(preg_match('/^[0-9a-z]{8}$/',substr($oldfile,0,strrpos($oldfile,".",-7)),$mc)==0)
-							{
-							$strud="update flinfo set md5fn='".$file."',fn='".$oldfile."'  where shcd='".$precode2."'";
-							}
-							mysqli_query($con,$strud);
-						}
-						else
-						{
-							$query_i='insert into flinfo values ("'.$precode2.'","'.$file.'","'.$oldfile.'")';
-							mysqli_query($con,$query_i);
-						}
+					$oldfile=$file;//旧的文件名
+					$newfile=substr(md5($file),0,8).$ext;
+					if(preg_match('/^[0-9a-z]{8}$/',$fdname)==0){
+						//不匹配就重命名
+						$query="insert into flinfo (shcd,md5fn,fn) values ('".getcode(sha1_file('../srcp/'.$file),1)."','".$newfile."','".$oldfile."')";
+						rename(iconv('UTF-8','GBK',"../srcp/".$file), iconv('UTF-8','GBK',"../srcp/".$newfile));
+						mysqli_query($con,$query);
 					}
+					else{
+						//匹配分两种情况：1s5d14a2.zip和Website2.zip
+						$query="select * from flinfo where md5fn='".$file."' limit 1";
+						$result=mysqli_query($con,$query);
+						if(mysqli_num_rows($result)==0){
+							//在数据库里没有这个文件
+						$query2="insert into flinfo (shcd,md5fn,fn) values ('".getcode(sha1_file('../srcp/'.$file),1)."','".$newfile."','".$oldfile."')";
+						rename(iconv('UTF-8','GBK',"../srcp/".$file), iconv('UTF-8','GBK',"../srcp/".$newfile));
+						mysqli_query($con,$query2);
 						}
-					else
-					{
-						$query_i='insert into flinfo values ("'.$precode2.'","'.$file.'","'.$oldfile.'")';
-							mysqli_query($con,$query_i);
+						
 					}
-
 
 				}
 			}
@@ -467,5 +465,4 @@ function ck($n,$p){
 	}
 	return false;
 }
-
 ?>

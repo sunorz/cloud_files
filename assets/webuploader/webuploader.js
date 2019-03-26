@@ -3596,7 +3596,7 @@
                     }
     
                     file.setStatus( Status.INTERRUPT );
-                    $.each( me.pool, function( _, v ) {
+                    $.each( me.pool, function( file, v ) {
     
                         // 只 abort 指定的文件。
                         if (v.file !== file) {
