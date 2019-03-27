@@ -127,7 +127,7 @@ uploader.on( 'fileQueued', function( file ) {
 	$(".drop-tips").hide();
 	/*包含非法后缀或文件名为：
 	  ..jpg,.jpg,.name.jpg*/
-	if($.inArray(filext,arr)>-1||filename.IndexOf(".")==0){
+	if($.inArray(filext,arr)>-1||filename.indexOf(".")==0){
     $("#thelist").append('<div id="'+file.id+'" class="item-w"><div class="item-i"><strong style="max-width:10em;display:inline-block;color:#ef5350;" class="truncate">'+file.name+'</strong></div><div class="item-ir"><small>非法文件名或被禁止的后缀。</small></div>		</div>');
 		uploader.removeFile(file);
 		}
