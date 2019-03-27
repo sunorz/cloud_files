@@ -440,19 +440,19 @@ if(@$handle = opendir("../srcp")){
 						$update="update flinfo set md5fn='".$newfile."' where fn like binary '".$oldfile."'";
 						rename(iconv('UTF-8','GBK',"../srcp/".$file), iconv('UTF-8','GBK',"../srcp/".$newfile));
 						mysqli_query($con,$update);
+						}	
 						}
 						/*
 					    如果$file不在以上字段
 						rname
 						insert
 					    */
-						$select2="select md5fn,fn from flinfo where md5fn='".$oldfile."' or fn like binary '".$newfile."'";
+						$select2="select md5fn,fn from flinfo where md5fn='".$oldfile."' or fn like binary '".$oldfile."'";
 						$result2=mysqli_query($con,$select2);
 						if(mysqli_num_rows($result2)==0){	
 						$insert="insert into flinfo (shcd,md5fn,fn) values ('".getcode(sha1_file('../srcp/'.$file),1)."','".$newfile."','".$oldfile."')";
 						rename(iconv('UTF-8','GBK',"../srcp/".$file), iconv('UTF-8','GBK',"../srcp/".$newfile));
 						mysqli_query($con,$insert);
-						}
 					}			
 				}
 			}
