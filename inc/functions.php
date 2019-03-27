@@ -4,7 +4,7 @@ define('__ROOT__', substr(dirname(__FILE__), 0, -4));
 /*
 Copyright by Sunplace
 CT:2018/12/17
-MT:2019/3/14
+MT:2019/3/27
 function index：
 1) ls - 遍历文件夹文件，返回一个带索引首字母的二维数组。
 2) getfirstchar - 根据文件名返回索引首字母。
@@ -380,7 +380,7 @@ echo '<center><a href="//'.$_SERVER['HTTP_HOST'].'/inc/ll.php?'.http_build_query
 
 }
 
-/*11) 输入文件的sha1和配置文件inc/data.php的内的sha1比较，输出文件名。*/
+/*11) 读取数据库，输出文件名。*/
 function readconfig(){
 require("../inc/conn.php");
 $query="select * from flinfo where md5fn<>'0'";
@@ -428,25 +428,32 @@ if(@$handle = opendir("../srcp")){
 				}
 					$oldfile=$file;//旧的文件名
 					$newfile=substr(md5($file),0,8).$ext;
-					if(preg_match('/^[0-9a-z]{8}$/',$fdname)==0){
-						//不匹配就重命名
-						$query="insert into flinfo (shcd,md5fn,fn) values ('".getcode(sha1_file('../srcp/'.$file),1)."','".$newfile."','".$oldfile."')";
+					$select1="select md5fn,fn from flinfo where md5fn<>0";
+					$result1=mysqli_query($con,$select1);
+					while($rows1=mysqli_fetch_row($result1)){
+						if($rows1[1]==$file){
+						/*
+						如果$file在fn字段
+						rname
+						update md5fn
+						*/
+						$update="update flinfo set md5fn='".$newfile."' where fn like binary '".$oldfile."'";
 						rename(iconv('UTF-8','GBK',"../srcp/".$file), iconv('UTF-8','GBK',"../srcp/".$newfile));
-						mysqli_query($con,$query);
-					}
-					else{
-						//匹配分两种情况：1s5d14a2.zip和Website2.zip
-						$query="select * from flinfo where md5fn='".$file."' limit 1";
-						$result=mysqli_query($con,$query);
-						if(mysqli_num_rows($result)==0){
-							//在数据库里没有这个文件
-						$query2="insert into flinfo (shcd,md5fn,fn) values ('".getcode(sha1_file('../srcp/'.$file),1)."','".$newfile."','".$oldfile."')";
-						rename(iconv('UTF-8','GBK',"../srcp/".$file), iconv('UTF-8','GBK',"../srcp/".$newfile));
-						mysqli_query($con,$query2);
+						mysqli_query($con,$update);
 						}
-						
-					}
-
+						/*
+					    如果$file不在以上字段
+						rname
+						insert
+					    */
+						$select2="select md5fn,fn from flinfo where md5fn='".$oldfile."' or fn like binary '".$newfile."'";
+						$result2=mysqli_query($con,$select2);
+						if(mysqli_num_rows($result2)==0){	
+						$insert="insert into flinfo (shcd,md5fn,fn) values ('".getcode(sha1_file('../srcp/'.$file),1)."','".$newfile."','".$oldfile."')";
+						rename(iconv('UTF-8','GBK',"../srcp/".$file), iconv('UTF-8','GBK',"../srcp/".$newfile));
+						mysqli_query($con,$insert);
+						}
+					}			
 				}
 			}
 		}
