@@ -1,51 +1,19 @@
 # 私人云盘  
 *通过网页来分享你的文件。*    
-`表flinfo`
-<div>
-    <table border="0">
-      <tr>
-        <th>字段名</th>
-        <th>数据类型</th>
-        <th>备注</th>
-      </tr>
-      <tr>
-        <td>shcd</td>
-        <td>varchar(8)</td>
-        <td>分享码</td>
-      </tr>
-            <tr>
-        <td>md5fn</td>
-        <td>varchar(20)</td>
-        <td>加密后的文件名</td>
-      </tr>
-            <tr>
-        <td>fn</td>
-        <td>text</td>
-        <td>原始文件名</td>
-      </tr>
-    </table>
-</div>
+`表 flinfo`
 
-`表user` 
-<div>
-    <table border="0">
-      <tr>
-        <th>字段名</th>
-        <th>数据类型</th>
-        <th>备注</th>
-      </tr>
-      <tr>
-        <td>coln</td>
-        <td>varchar(50)</td>
-        <td>用户名</td>
-      </tr>
-            <tr>
-        <td>colp</td>
-        <td>varchar(32)</td>
-        <td>密码</td>
-      </tr>
-    </table>
-</div>
+|字段名|数据类型|备注|
+|:---:|:---:|:---:|
+|shcd|varchar(8)|分享码|
+|md5fn|varchar(20)|加密后的文件名|
+|fn|text|原始文件名|
+
+`表 user`  
+
+|字段名|数据类型|备注|
+|:---:|:---:|:---:|
+|coln|varchar(50)|登录账户|
+|colp|varchar(32)|密码|
 
 **inc/conn.php**   
 连接数据库。    
