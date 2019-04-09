@@ -1,52 +1,20 @@
 # FILES CLOUD
 *Share your files through the web.*  
 
-`TABLE flinfo`  
-<div>
-    <table border="0">
-      <tr>
-        <th>FILED NAME</th>
-        <th>TYPE</th>
-        <th>REMARKS</th>
-      </tr>
-      <tr>
-        <td>shcd</td>
-        <td>varchar(8)</td>
-        <td>Share code</td>
-      </tr>
-            <tr>
-        <td>md5fn</td>
-        <td>varchar(20)</td>
-        <td>Encrypted file name</td>
-      </tr>
-            <tr>
-        <td>fn</td>
-        <td>text</td>
-        <td>original file name</td>
-      </tr>
-    </table>
-</div>
+`TABLE flinfo` 
+
+|FILED NAME|TYPE|REMARKS|
+|:---:|:---:|:---:|
+|shcd|varchar(8)|Share code|
+|md5fn|varchar(20)|Encrypted file name|
+|fn|text|Original file name|
 
 `TABLE user`  
-<div>
-    <table border="0">
-      <tr>
-        <th>FILED NAME</th>
-        <th>TYPE</th>
-        <th>REMARKS</th>
-      </tr>
-      <tr>
-        <td>coln</td>
-        <td>varchar(50)</td>
-        <td>username</td>
-      </tr>
-      <tr>
-        <td>colp</td>
-        <td>varchar(32)</td>
-        <td>password</td>
-      </tr>
-    </table>
-</div>
+
+|FILED NAME|TYPE|REMARKS|
+|:---:|:---:|:---:|
+|coln|varchar(50)|Login name|
+|colp|varchar(32)|Password|
 
 **inc/conn.php** 
 Connect to the database.  
