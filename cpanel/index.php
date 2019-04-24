@@ -2,12 +2,12 @@
 /*
 Copyright by Sunplace
 CT:2018/12/25
-MT:2019/3/24
+MT:2019/4/24
 */
 session_start();
 if(isset($_SESSION['name'])&&isset($_SESSION['password'])){
 	$n=$_SESSION['name'];
-	$p=md5($_SESSION['password'].'54h7845');
+	$p=md5($_SESSION['password'].'CONFUSED_STRING');
 	require('../inc/functions.php');
 	if(!ck($n,$p))
 	{
