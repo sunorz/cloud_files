@@ -27,6 +27,7 @@
 默认值：
 用户名：admin
 密码：admin
+`md5($.md5('password').'CONFUSED_STRING')`
 需要 **PHP** 和 **MySQL**。    
 `Copyright by Sunplace`    
 本文档最后更新*2019/4/24* 

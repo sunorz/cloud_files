@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50724
 File Encoding         : 65001
 
-Date: 2019-04-24 11:15:25
+Date: 2019-04-24 22:21:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -31,6 +31,7 @@ CREATE TABLE `flinfo` (
 -- Records of flinfo
 -- ----------------------------
 
+
 -- ----------------------------
 -- Table structure for `user`
 -- ----------------------------
@@ -44,4 +45,4 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('admin', 'e9336885a2fbbc43faed6558df502ef4');
+INSERT INTO `user` VALUES ('admin', '31e51c693a54a982a25c39cc81edac39');
