@@ -40,7 +40,7 @@ i{vertical-align: middle;}
 	session_start();
 	if(isset($_SESSION['name'])&&isset($_SESSION['password'])){
 	$n=$_SESSION['name'];
-	$p=md5($_SESSION['password'].'54h7845');
+	$p=md5($_SESSION['password'].'CONFUSED_STRING');
 	require('inc/functions.php');
 	if(ck($n,$p)){
 		?>
