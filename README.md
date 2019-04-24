@@ -1,29 +1,32 @@
-# FILES CLOUD
-*Share your files through the web.*  
+# 私人云盘  
+*通过网页来分享你的文件。*    
+`表 flinfo`
 
-`TABLE flinfo` 
-
-|FILED NAME|TYPE|REMARKS|
+|字段名|数据类型|备注|
 |:---:|:---:|:---:|
-|shcd|varchar(8)|Share code|
-|md5fn|varchar(20)|Encrypted file name|
-|fn|text|Original file name|
+|shcd|varchar(8)|分享码|
+|md5fn|varchar(20)|加密后的文件名|
+|fn|text|原始文件名|
 
-`TABLE user`  
+`表 user`  
 
-|FILED NAME|TYPE|REMARKS|
+|字段名|数据类型|备注|
 |:---:|:---:|:---:|
-|coln|varchar(50)|Login name|
-|colp|varchar(32)|Password|
+|coln|varchar(50)|登录账户|
+|colp|varchar(32)|密码|
 
-**inc/conn.php** 
-Connect to the database.  
-**cpanel/index.php**  
-Used to list the download address of a private file.  
-Access format:  
+**inc/conn.php**   
+连接数据库。    
+**inc/index.php**    
+用于列出私密文件的下载地址。  
+访问格式：  
 `/cpanel/index.php?key=value`  
-**inc/functions.php** `$key = 'value';` in *pri* is the same as `$key = 'value';` in **inc/ll.php**.  
-Requires **PHP** and **MySQL**.  
-`Copyright by Sunplace`  
-*2019/1/13*  
-[中文版](README_zh-CN.md)
+**inc/functions.php** *pri* 里的 `$key = 'value';` 要和**inc/ll.php** 里的 `$key = 'value';`一致。
+**index.php**
+42行的`CONFUSED_STRING`可以替换为其它，注意数据库中user表里的colp也要同时更新。
+默认值：
+用户名：admin
+密码：admin
+需要 **PHP** 和 **MySQL**。    
+`Copyright by Sunplace`    
+本文档最后更新*2019/4/24* 
