@@ -2,7 +2,7 @@
 /*
 Copyright by Sunplace
 CT:2018/12/25
-MT:2019/1/25
+MT:2019/3/24
 */
 session_start();
 if(isset($_SESSION['name'])&&isset($_SESSION['password'])){
@@ -47,6 +47,8 @@ else{
 		.in-select{display:none;float: right;}
 		.chip>img{border-radius:0;}
 		a.truncate{width:90%;display:inline-block;}
+		.tips{vertical-align: middle;display:inline-block;color:#cccccc;margin-bottom:0.5em;margin-left:0.5em;cursor:pointer;}
+		.tips-content{border: 1px solid #e7e7eb;color:#9A9A9A;padding:12px;word-break:break-all;text-indent:24px;display: none;font-size:12px;}
 	</style>
 <body>
 	<header> 
@@ -88,7 +90,8 @@ else{
 <div id="content2" style="display: none;"><h4>私密列表</h4>
 <div id="content2-list"><!--List here.--></div></div>
 <!--文件上传-->
-<div id="content3" style="display: none;"><h4>文件上传</h4>
+<div id="content3" style="display: none;"><h4 style="display:inline-block;">文件上传</h4><i class="material-icons tips" title="点击查看帮助">help</i>
+<div class="tips-content">不支持上传文件名为空和后缀为<i class="red-text">exe,msi,php,html,htm,js,css,json,config,htacess,sh,asp,aspx,cs,ashx,bat,cmd</i>的文件。文件大小不能超过<i class="red-text">200MB</i>。</div>
 	<div id="content3-list"><iframe id="mainiframe" frameborder="0" scrolling="no" src="../inc/fileupload.php"  onload="setIframeHeight(this)" width="100%"></iframe></div>
 		</div>
 	</div>

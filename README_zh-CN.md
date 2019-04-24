@@ -21,8 +21,13 @@
 用于列出私密文件的下载地址。  
 访问格式：  
 `/cpanel/index.php?key=value`  
-**inc/functions.php** *pri* 里的 `$key = 'value';` 要和**inc/ll.php** 里的 `$key = 'value';`一致。  
+**inc/functions.php** *pri* 里的 `$key = 'value';` 要和**inc/ll.php** 里的 `$key = 'value';`一致。
+**index.php**
+42行的`CONFUSED_STRING`可以替换为其它，注意数据库中user表里的colp也要同时更新。
+默认值：
+用户名：admin
+密码：admin
 需要 **PHP** 和 **MySQL**。    
 `Copyright by Sunplace`    
-*2019/1/13*    
+本文档最后更新*2019/4/24*    
 [English](README.md) 

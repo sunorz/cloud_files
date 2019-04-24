@@ -1,6 +1,6 @@
-<!--Copyright by Sunplace
+﻿<!--Copyright by Sunplace
 CT:2018/12/16
-MT:2019/3/5
+MT:2019/4/24
 -->
 <!doctype html>
 <html>
@@ -17,6 +17,7 @@ MT:2019/3/5
 <script src="assets/materialize/js/materialize.min.js"></script>
 <style>		
 .page-title{font-size:2em;}
+i{vertical-align: middle;}
 </style>
 <body>
 	<header> 
@@ -39,9 +40,8 @@ MT:2019/3/5
 	session_start();
 	if(isset($_SESSION['name'])&&isset($_SESSION['password'])){
 	$n=$_SESSION['name'];
-	$p=md5($_SESSION['password'].'CONFUSED_STRING');
+	$p=md5($_SESSION['password'].'54h7845');
 	require('inc/functions.php');
-		//initconfig();
 	if(ck($n,$p)){
 		?>
         <div class="col s12 blue lighten-5" style="position: relative;">
