@@ -2,13 +2,13 @@
 /*
 Copyright by Sunplace
 CT:2019/1/12
-MT:2019/3/20
+MT:2019/3/24
 */
 session_start();
 if(isset($_SESSION['name'])&&isset($_SESSION['password']))
 {
 	require("functions.php");
-	if(!ck($_SESSION['name'],md5($_SESSION['password'].'sunplace'))){
+	if(!ck($_SESSION['name'],md5($_SESSION['password'].'CONFUSED_STRING'))){
 		die("failed");
 	}
 }
@@ -16,7 +16,7 @@ else
 {
 	die("failed");
 }
-	?>
+?>
 <!doctype html>
 <html>
 <head>
@@ -66,7 +66,6 @@ img{ height:2em;vertical-align: middle;margin-right:0.5em;}
         <input class="with-gap" name="group1" type="radio" id="pub" checked />
         <span for="pub">公开</span>
       </label>
-	  <br>
       <label>
         <input class="with-gap" name="group1" id="pri" type="radio"  />
         <span for="pri">私密</span>
