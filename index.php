@@ -1,4 +1,4 @@
-<!--Copyright by Sunplace
+﻿<!--Copyright by Sunplace
 CT:2018/12/16
 MT:2019/4/24
 -->
@@ -42,7 +42,7 @@ i{vertical-align: middle;}
 	$n=$_SESSION['name'];
 	$p=$_SESSION['password'];
 	require('inc/functions.php');
-	if(ck($n,md5($p,'CONFUSED_STRING'))){
+	if(ck($n,md5($p.'CONFUSED_STRING'))){
 		?>
         <div class="col s12 blue lighten-5" style="position: relative;">
 		  <p class="center-align"><a href="cpanel" title="进入后台"><img class="z-depth-2 circle" src="assets/imgs/avatars/<?php echo $n;?>.jpg" style="max-height: 150px;border:#DCDCDC 3px solid;"></a></p>     

@@ -1,10 +1,10 @@
-<?php
+﻿<?php
 define('__ROOT__', substr(dirname(__FILE__), 0, -4));
 
 /*
 Copyright by Sunplace
 CT:2018/12/17
-MT:2019/3/27
+MT:2019/4/24
 function index：
 1) ls - 遍历文件夹文件，返回一个带索引首字母的二维数组。
 2) getfirstchar - 根据文件名返回索引首字母。
@@ -470,6 +470,9 @@ function ck($n,$p){
 	if(mysqli_num_rows(mysqli_query($con,$q))>0){
 		return true;
 	}
+else{
 	return false;
 }
+}
+	
 ?>
