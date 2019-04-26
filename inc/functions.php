@@ -1,10 +1,10 @@
-﻿<?php
+<?php
 define('__ROOT__', substr(dirname(__FILE__), 0, -4));
 
 /*
 Copyright by Sunplace
 CT:2018/12/17
-MT:2019/4/24
+MT:2019/4/26
 function index：
 1) ls - 遍历文件夹文件，返回一个带索引首字母的二维数组。
 2) getfirstchar - 根据文件名返回索引首字母。
@@ -19,6 +19,7 @@ function index：
 11) readconfig - 读取数据库（私密）。
 12) initconfigp - 初始化数据库（私密）。
 13) ck - 用户认证。
+14) is_empty_dir - 文件夹判空。
 */
 //字典初始化（用来处理php处理不了的中文）
 //Read JSON custom pinyin dictionary
@@ -369,7 +370,7 @@ echo '<div class="row z-depth-2" style="padding: 1em;margin: 2em 0;"><div class=
 echo '<p style="word-break: break-all;"><strong>SHA1</strong>&nbsp;&nbsp;'.sha1_file('../srcp/'.$file).'</p>';
 echo '<p><strong>size</strong>&nbsp;&nbsp;'.trans_byte(filesize('../srcp/'.$file)).'</p>';
 echo '<p><strong>最后修改时间：</strong>&nbsp;&nbsp;'.date('Y-m-d H:i:s',filemtime('../srcp/'.$file)).'</p>';
-$key = 'sunplace'; //秘钥 ，非常重要，不参与url传输、秘钥泄露将导致token验证失效
+$key = 'CONFUSED_STRING'; //秘钥 ，非常重要，不参与url传输、秘钥泄露将导致token验证失效
 $data['pcode'] = $row[0];
 $data['token']= md5( md5($key) . md5(date("Y-m-d-H",time())) );
 echo '<center><a href="//'.$_SERVER['HTTP_HOST'].'/inc/ll.php?'.http_build_query($data).'"  type="button" class="waves-effect waves-light btn blue"><i class="material-icons left">file_download</i>Download</a></center></div>';
@@ -385,7 +386,7 @@ function readconfig(){
 require("../inc/conn.php");
 $query="select * from flinfo where md5fn<>'0'";
 $result=mysqli_query($con,$query);
-	if(mysqli_num_rows($result)>0){
+	if(!is_empty_dir("../srcp")&&mysqli_num_rows($result)>0){
 		echo '<ul class="collection with-header"><li class="collection-header"><a class="btn-floating btn waves-effect waves-light red lighten-3"><i class="material-icons">lock</i></a></li>';
 	while($row=mysqli_fetch_row($result)){
 		if(file_exists("../srcp/".$row[1])){
@@ -468,11 +469,26 @@ function ck($n,$p){
 	require(__ROOT__."/inc/conn.php");
 	$q="select coln from user where coln='".$n."' and colp='".$p."'";
 	if(mysqli_num_rows(mysqli_query($con,$q))>0){
+	
 		return true;
 	}
-else{
+	else{
 	return false;
-}
-}
+	}
 	
+}
+/*14) 文件夹判空*/
+function is_empty_dir($fp)
+{
+    if (!is_dir($fp)) {
+        return false;
+    }
+    $H = @opendir($fp);
+    while($file = readdir($H)){
+        if(!($file == "." || $file == "..")){
+            return false;
+        }
+    }
+    return true;
+}
 ?>
