@@ -1,10 +1,9 @@
 <?php
 define('__ROOT__', substr(dirname(__FILE__), 0, -4));
-
 /*
 Copyright by Sunplace
 CT:2018/12/17
-MT:2019/4/26
+MT:2019/4/28
 function index：
 1) ls - 遍历文件夹文件，返回一个带索引首字母的二维数组。
 2) getfirstchar - 根据文件名返回索引首字母。
@@ -20,6 +19,7 @@ function index：
 12) initconfigp - 初始化数据库（私密）。
 13) ck - 用户认证。
 14) is_empty_dir - 文件夹判空。
+15）init_dir - 如果文件夹有修改，则返回1。
 */
 //字典初始化（用来处理php处理不了的中文）
 //Read JSON custom pinyin dictionary
@@ -29,7 +29,7 @@ $data = json_decode($json_string,true);
 /*1) 遍历文件夹文件，返回一个带索引的二维数组。*/
 //Traverse local files in a custom folder
 function ls($dir,$filter){
-	initconfig();
+	if(init_dir()==1){initconfig();}
 	//如果src文件夹不存在，就创建。（可能会报Permission denied）
 	//if(!is_dir($dir)){mkdir($dir);}
 	$files = array();
@@ -221,7 +221,7 @@ function array_null($arr){
 //public
 function pub($str){
 	require("../inc/conn.php");	
-	initconfig();
+	if(init_dir()==1){initconfig();}
 	$query_s="select * from flinfo where md5fn='0'";
 	$result_s=mysqli_query($con,$query_s);
  while ($row = mysqli_fetch_row($result_s)) {
@@ -350,11 +350,11 @@ $gti=array_diff($fa,$fb);
 
 
 
-/*10) 输入文件的code，和配置文件inc/data.php的内的code比较，输出对应信息。*/
+/*10) 输入文件的code，查询数据库，输出对应信息。*/
 //private
 function pri($str){
 	require("../inc/conn.php");
-	initconfigp();
+	if(init_dir()==1){initconfigp();}
 	$query_s="select * from flinfo where md5fn<>'0'";
 	$result_s=mysqli_query($con,$query_s);
  while ($row = mysqli_fetch_row($result_s)) {
@@ -490,5 +490,32 @@ function is_empty_dir($fp)
         }
     }
     return true;
+}
+
+/*15) 如果文件夹有修改，则返回1。*/
+function init_dir(){
+$flag=0;
+date_default_timezone_set('PRC');
+$json_string = file_get_contents(__ROOT__.'/assets/js/dirmtime.json');
+$data = json_decode($json_string,true);
+foreach($data as $key=>$val){
+			if($val==0){
+			$data[$key]=filemtime("../".$key);
+			$json_string = json_encode($data);
+            file_put_contents(__ROOT__.'/assets/js/dirmtime.json',$json_string);//写入
+
+			}
+			else{
+				if($val!=filemtime("../".$key))
+				{
+			$data[$key]=filemtime("../".$key);
+			$json_string = json_encode($data);
+            file_put_contents(__ROOT__.'/assets/js/dirmtime.json',$json_string);//写入
+			$flag=1;
+				}
+			}
+
+}
+return $flag;
 }
 ?>
