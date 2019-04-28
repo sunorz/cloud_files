@@ -1,5 +1,5 @@
-﻿#
-# robots.txt for dl.jsunplace.com
+#
+# robots.txt for dl.kkii.org
 #
 
 User-agent: *
