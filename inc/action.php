@@ -4,6 +4,11 @@ Copyright by Sunplace
 CT:2019/1/11
 MT:2019/4/24
 */
+if($_SERVER['PHP_SELF']=='/inc/action.php'){
+
+header('Location: /404.html');
+
+}
 session_start();
 if(isset($_POST['username'])&&isset($_POST['password'])){
 	require("functions.php");

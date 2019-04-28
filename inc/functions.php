@@ -1,5 +1,4 @@
 <?php
-define('__ROOT__', substr(dirname(__FILE__), 0, -4));
 /*
 Copyright by Sunplace
 CT:2018/12/17
@@ -21,6 +20,12 @@ function index：
 14) is_empty_dir - 文件夹判空。
 15）init_dir - 如果文件夹有修改，则返回1。
 */
+if($_SERVER['PHP_SELF']=='/inc/functions.php'){
+
+header('Location: /404.html');
+
+}
+define('__ROOT__', substr(dirname(__FILE__), 0, -4));
 //字典初始化（用来处理php处理不了的中文）
 //Read JSON custom pinyin dictionary
 $json_string = file_get_contents(__ROOT__.'/assets/js/dict.json');
