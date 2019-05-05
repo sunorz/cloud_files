@@ -1,3 +1,8 @@
+.material-icons {
+    display: inline-block;
+    vertical-align: middle;
+    transform: translateY(-.1em);
+}
 @font-face {
   font-family: 'SourceHanSans';
   font-style: normal;

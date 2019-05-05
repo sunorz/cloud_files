@@ -2,7 +2,7 @@
 /*
 Copyright by Sunplace
 CT:2018/12/25
-MT:2019/4/24
+MT:2019/3/21
 */
 session_start();
 if(isset($_SESSION['name'])&&isset($_SESSION['password'])){

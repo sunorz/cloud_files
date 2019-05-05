@@ -1,6 +1,6 @@
-﻿<!--Copyright by Sunplace
+<!--Copyright by Sunplace
 CT:2018/12/16
-MT:2019/4/24
+MT:2019/5/5
 -->
 <!doctype html>
 <html>
@@ -17,7 +17,6 @@ MT:2019/4/24
 <script src="assets/materialize/js/materialize.min.js"></script>
 <style>		
 .page-title{font-size:2em;}
-i{vertical-align: middle;}
 </style>
 <body>
 	<header> 
