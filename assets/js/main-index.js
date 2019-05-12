@@ -1,8 +1,11 @@
-﻿/* CT:2019/1/9
-   MT:2019/1/9
+/* CT:2019/1/9
+   MT:2019/5/12
    Sunplace */ 
 		var reg = /^(\d|[a-zA-Z])+$/;
 		$(function(){
+		$(".avatar").click(function(){
+			window.location.href="cpanel";
+		});
 		$("#username").bind('input propertychange', function() {	
 		var uname = $(this).val();
 		if($.trim(uname)===''){
@@ -52,7 +55,6 @@
 		var name = $.trim($("#username").val());
 		var pp = $.md5($("#password").val());
 		if(name!="" && $("#password").val()!="" && $('.errmsg').text()===''){
-		   //console.log("uname="+$.trim($("#username").val())+",password="+$("#password").val());
 		$(".login").html('<div class="valign-wrapper" style="height:128px;"><div class="valign center" style="width:100%;"><div class="preloader-wrapper active small"><div class="spinner-layer spinner-blue-only"><div class="circle-clipper left"><div class="circle"></div>      </div><div class="gap-patch">  <div class="circle"></div>   </div><div class="circle-clipper right">        <div class="circle"></div>    </div>    </div>  </div><p>登录中...</p></div></div>');
 
 			$.post('../inc/action.php',{username:name,password:pp},function(result){

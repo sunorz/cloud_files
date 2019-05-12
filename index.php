@@ -1,6 +1,6 @@
 <!--Copyright by Sunplace
 CT:2018/12/16
-MT:2019/5/5
+MT:2019/5/12
 -->
 <!doctype html>
 <html>
@@ -17,6 +17,8 @@ MT:2019/5/5
 <script src="assets/materialize/js/materialize.min.js"></script>
 <style>		
 .page-title{font-size:2em;}
+.circle{height:150px;width:150px;border:#fff 3px solid;}
+.avatar{margin: auto; background-color:#000;height:150px;width:150px;border-radius:50%;position:absolute;top: 50%;transform: translateY(-50%) translateX(-50%);left:50%;border:#fff 3px solid;background-position:center center;background-repeat: no-repeat;cursor:pointer;}
 </style>
 <body>
 	<header> 
@@ -43,13 +45,41 @@ MT:2019/5/5
 	require('inc/functions.php');
 	if(ck($n,md5($p.'CONFUSED_STRING'))){
 		?>
-        <div class="col s12 blue lighten-5" style="position: relative;">
-		  <p class="center-align"><a href="cpanel" title="进入后台"><img class="z-depth-2 circle" src="assets/imgs/avatars/<?php echo $n;?>.jpg" style="max-height: 150px;border:#DCDCDC 3px solid;"></a></p>     
+        <div class="col s12 blue lighten-5" style="position: relative;height:190px;">
+		 <?php
+		$flag=0;
+		if(!is_file("assets/imgs/avatars/".$n.".jpg")){
+			$flag=1;
+		}
+		
+		if($flag==0){
+			$size  = getimagesize("assets/imgs/avatars/".$n.".jpg"); 
+			$width = $size[0];
+			$height = $size[1];
+			if(max($width,$height)>=150){
+				?>
+				<div class="avatar" title="进入后台" style="background-size:contain;background-image:url('assets/imgs/avatars/<?php echo $n;?>.jpg');"></div>
+				<?php
+			}
+			else{
+				?>
+				<div class="avatar" title="进入后台" style="background-image:url('assets/imgs/avatars/<?php echo $n;?>.jpg');"></div>
+				<?php
+			}
+							
+		}
+		else
+		{
+		echo '<p class="center-align"><img class="circle" src="assets/imgs/avatars/default.jpg"></p>';
+		}
+		
+		
+		
+		?>
           <a onClick="logout()" class="btn-floating waves-effect waves-light red" style="position: absolute;bottom: -20px;right:10px;"><i class="material-icons">exit_to_app</i></a> 
-			<div class="divider"></div>
       </div>
 			 <div class="col s12 login">
-          <p><?php echo $n;?><i>已登录。</i></p></div>
+          <p><i class="material-icons">account_circle</i><?php echo $n;?>&nbsp;&nbsp;<span class="blue-grey-text text-lighten-3">已登录。</span></p></div>
 	   <?php
 	}
 	}
