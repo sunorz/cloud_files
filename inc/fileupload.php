@@ -179,13 +179,16 @@ uploader.on( 'uploadComplete', function( file ) {
 });
 var ty="pub";
 $(function(){
+	if($.cookie('type')=='pri'){
+	$('input[type=radio][name=group1][id=pri]').prop('checked',true);
+	}	
 		 $('input[type=radio][name=group1]').change(function() {
 			$('.item-w').remove();
         if (this.id == 'pri') {
-        $.cookie('type', 'pri');
+        $.cookie('type', 'pri');			
         }
         else if (this.id == 'pub') {
-        $.cookie('type', 'pub');
+        $.cookie('type', 'pub');			
         }
     });
 });
