@@ -2,7 +2,7 @@
 /*
 Copyright by Sunplace
 CT:2018/12/25
-MT:2019/3/21
+MT:2019/5/23
 */
 session_start();
 if(isset($_SESSION['name'])&&isset($_SESSION['password'])){
@@ -38,20 +38,30 @@ else{
 		.tabs .indicator{background: #0d47a1 !important;}
 		.tabs .tab a{color: #0d47a1 !important;-webkit-transition: color .28s ease, background-color .28s ease;
     transition: color .28s ease, background-color .28s ease;}		
-		img[class^='ft-'],.collection img{height: 1em; font-size:1em !important;margin-right: 0.5em;color:#1a237e; }
+		img[class^='ft-'],.collection img,.in-select img{height: 1em; font-size:1em !important;margin-right: 0.5em;color:#1a237e; }
+		.in-select a{display:block;padding:0.5em;}
+		.in-select a:hover{background:#ccc;}
 		.open{color:#0d47a1;}
-		.open:hover{color: #f44336;}
+		.more{color:#0d47a1;cursor:pointer;}
+		.open:hover,.more:hover{color: #f44336;}
 		.tabs .tab{background: #fff;}
 		.preloader-wrapper{width: 1em;height: 1em;margin-right: 0.5em;}
-		.in-select .collection{display: inline-block;height:200px;overflow-y: scroll; }
-		.in-select{display:none;float: right;}
+		.in-select{height:200px;overflow-y: scroll;display:none;float: right;border:#CCC 1px solid;}
 		.chip>img{border-radius:0;}
-		a.truncate{width:90%;display:inline-block;}
 		.tips{vertical-align: middle;display:inline-block;color:#cccccc;margin-bottom:0.5em;margin-left:0.5em;cursor:pointer;}
 		.tips-content{border: 1px solid #e7e7eb;color:#9A9A9A;padding:12px;word-break:break-all;text-indent:24px;display: none;font-size:12px;}
+		.truncate{display:inline-block;vertical-align:middle;max-width:70%;}
+		.bt{background:#d7ecf5;}
+		.card{box-shadow: none;background:#f6f6f6;color:#000;}
+		.del{color:#EB9C23;}
+		.slideup{background:#f1f3f4;color:#babcbe;}
+		.switch label input[type=checkbox]:checked+.lever:after{background-color:#29b6f6;}
+		.switch label input[type=checkbox]:checked+.lever{background-color:#b3e5fc;}
+		.delall{vertical-align: middle;margin-right:0.35em;}
+		.filename{width:80% !important;}
 	</style>
 <body>
-	<header> 
+<header> 
         <nav class="top-nav  blue lighten-3" style="height: 60px;line-height: 60px;">	
 			<div class="nav-wrapper" style="padding-left: 1em;">
 				<div class="container">
@@ -71,20 +81,18 @@ else{
 <div id="content1"><h4>公开列表</h4><a class="btn right select waves-effect waves-light blue"><i class=" material-icons left">filter_list</i>筛选</a>
 			<div style="clear: both;"></div>
 			<div class="in-select">
-<div class="collection">
-	<a href="#" onclick="ls('apk')" class="collection-item"><img  src="../assets/imgs/ft-apk.svg">APK</a>
-	<a href="#" onclick="ls('zip')" class="collection-item"><img  src="../assets/imgs/ft-zip.svg">压缩文件</a>
-	<a href="#" onclick="ls('img')" class="collection-item"><img  src="../assets/imgs/ft-img.svg">图片</a>
-	<a href="#" onclick="ls('video')" class="collection-item"><img  src="../assets/imgs/ft-video.svg">视频</a>
-	<a href="#" onclick="ls('doc')" class="collection-item"><img  src="../assets/imgs/ft-doc.svg">Word文档</a>
-	<a href="#" onclick="ls('ppt')" class="collection-item"><img  src="../assets/imgs/ft-ppt.svg">PowerPoint文档</a>
-	<a href="#" onclick="ls('xls')" class="collection-item"><img  src="../assets/imgs/ft-xls.svg">Excel文档</a>
-	<a href="#" onclick="ls('pdf')" class="collection-item"><img  src="../assets/imgs/ft-pdf.svg">PDF文档</a>
-	<a href="#" onclick="ls('txt')" class="collection-item"><img  src="../assets/imgs/ft-txt.svg">文本文档</a>
-	<a href="#" onclick="ls('unknow')" class="collection-item"><img  src="../assets/imgs/ft-unknown.svg">其他文件</a>
+	<a href="#" onclick="ls('apk')"><img  src="../assets/imgs/ft-apk.svg">APK</a>
+	<a href="#" onclick="ls('zip')"><img  src="../assets/imgs/ft-zip.svg">压缩文件</a>
+	<a href="#" onclick="ls('img')"><img  src="../assets/imgs/ft-img.svg">图片</a>
+	<a href="#" onclick="ls('video')"><img  src="../assets/imgs/ft-video.svg">视频</a>
+	<a href="#" onclick="ls('doc')"><img  src="../assets/imgs/ft-doc.svg">Word文档</a>
+	<a href="#" onclick="ls('ppt')"><img  src="../assets/imgs/ft-ppt.svg">PowerPoint文档</a>
+	<a href="#" onclick="ls('xls')"><img  src="../assets/imgs/ft-xls.svg">Excel文档</a>
+	<a href="#" onclick="ls('pdf')"><img  src="../assets/imgs/ft-pdf.svg">PDF文档</a>
+	<a href="#" onclick="ls('txt')"><img  src="../assets/imgs/ft-txt.svg">文本文档</a>
+	<a href="#" onclick="ls('unknow')"><img  src="../assets/imgs/ft-unknown.svg">其他文件</a>
 </div>
-</div>
-			
+<div class="clearfix"></div>		
 <div id="content1-list"><!--List here.--></div></div>
 <!--私密列表-->
 <div id="content2" style="display: none;"><h4>私密列表</h4>
