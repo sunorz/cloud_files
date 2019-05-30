@@ -2,7 +2,7 @@
 /*
 Copyright by Sunplace
 CT:2018/12/17
-MT:2019/4/28
+MT:2019/5/22
 function index：
 1) ls - 遍历文件夹文件，返回一个带索引首字母的二维数组。
 2) getfirstchar - 根据文件名返回索引首字母。
@@ -79,14 +79,18 @@ if(array_null($files)){echo '<div class="red-text" style="padding:1em;margin-top
 <p class="text-center">没有'.ftname($filter).'。</p>
 <p class="text-center"><small>Nothing.</small></p>
 </div>';}
-
+else{
+echo ' <div class="switch" style="margin-bottom:30px;"><label>清空<input id="chk_1" type="checkbox"><span class="lever"></span>全选</label><span style="border-right: 2px solid #2196F7;margin:0 30px 0 30px;"></span>';
+					echo ' <label>正选<input id="chk_2" type="checkbox"><span class="lever"></span>反选</label><span style="border-right: 2px solid #2196F7;margin:0 30px 0 30px;"></span><a href="#"><i class="material-icons delall">delete_sweep</i>批量删除</a></div>';
+}
 			foreach($files as $keys=>$vals){
 				if(!array_null($files[$keys]))
 				{
+					
 					echo '<ul class="collection with-header"><li class="collection-header"><a class="btn-floating btn waves-effect waves-light blue lighten-3">'.$keys.'</a></li>';
 					foreach($files[$keys] as $vals2){
-						if(file_exists(__ROOT__."/src/".$vals2)){
-						echo '<li class="collection-item"><a href="/src/'.$vals2.'" download="'.$vals2.'" class="truncate"><img class="ft-'.fticon(substr($vals2, strrpos($vals2, '.')+1)).'"/>'.$vals2.'</a><a href="/s/'.getcode(sha1_file(__ROOT__."/src/".$vals2),0).'" target="_blank" class="secondary-content"><i class="material-icons open" title="前往文件明细">open_in_new</i></a></li>';
+						if(is_file(__ROOT__."/src/".$vals2)){
+						echo '<li class="collection-item"><label><input class="chk" type="checkbox" /><span style="vertical-align: middle;"></span></label><img style="vertical-align: middle;" class="ft-'.fticon(substr($vals2, strrpos($vals2, '.')+1)).'"/><a  class="truncate" href="/src/'.$vals2.'" download="'.$vals2.'">'.$vals2.'</a><div class="secondary-content"><i class="material-icons more" title="设置">more_vert</i>&nbsp;&nbsp;<a href="/s/'.getcode(sha1_file(__ROOT__."/src/".$vals2),0).'" target="_blank"><i class="material-icons open" title="前往文件明细">open_in_new</i></a></div></li>';
 
 					}
 						else{
@@ -168,7 +172,7 @@ return "xls";
 if($ft=="7z"||$ft=="tar"||$ft=="gz")//压缩包
 return "zip";
 //不存在
-if(!file_exists(__ROOT__."/assets/imgs/ft-".$ft.".svg")){return "unknown";}
+if(!is_file(__ROOT__."/assets/imgs/ft-".$ft.".svg")){return "unknown";}
 return $ft;
 }
 
@@ -197,7 +201,7 @@ return "xls";
 if($ft=="7z"||$ft=="tar"||$ft=="gz")//压缩包
 return "zip";
 //不存在
-if(!file_exists("../assets/imgs/ft-".$ft.".svg")){return "unknown";}
+if(!is_file("../assets/imgs/ft-".$ft.".svg")){return "unknown";}
 return $ft;
 }
 
@@ -231,7 +235,7 @@ function pub($str){
 	$result_s=mysqli_query($con,$query_s);
  while ($row = mysqli_fetch_row($result_s)) {
 	$gstr=substr($row[0],0,2).substr($row[0],3,2).substr($row[0],6);
-        if($gstr==$str&&file_exists("../src/".$row[2]))
+        if($gstr==$str&&is_file("../src/".$row[2]))
 {
 $file=$row[2];
 
@@ -364,7 +368,7 @@ function pri($str){
 	$result_s=mysqli_query($con,$query_s);
  while ($row = mysqli_fetch_row($result_s)) {
 	$gstr=substr($row[0],0,2).substr($row[0],3,2).substr($row[0],6);
-        if($gstr==$str&&file_exists("../srcp/".$row[1]))
+        if($gstr==$str&&is_file("../srcp/".$row[1]))
 {
 $file=$row[1];
 
@@ -394,7 +398,7 @@ $result=mysqli_query($con,$query);
 	if(!is_empty_dir("../srcp")&&mysqli_num_rows($result)>0){
 		echo '<ul class="collection with-header"><li class="collection-header"><a class="btn-floating btn waves-effect waves-light red lighten-3"><i class="material-icons">lock</i></a></li>';
 	while($row=mysqli_fetch_row($result)){
-		if(file_exists("../srcp/".$row[1])){
+		if(is_file("../srcp/".$row[1])){
 		echo '<li class="collection-item"><a href="//'.$_SERVER['HTTP_HOST'].'/s/'.$row[0].'" class="truncate"><img class="ft-'.fticon(substr($row[1], strrpos($row[1], '.')+1)).'">'.$row[2].'</a><a href="//'.$_SERVER['HTTP_HOST'].'/s/'.$row[0].'" target="_blank" class="secondary-content"><i class="material-icons open" title="前往文件明细">open_in_new</i></a></li>';
 		}
 		else{
@@ -415,7 +419,7 @@ $result=mysqli_query($con,$query);
 /*12) 初始化数据库（私密）。*/
 function initconfigp(){	
 require("../inc/conn.php");
-//if(file_exists("../srcp/"))
+//if(is_file("../srcp/"))
 //mkdir("../srcp");
 if(@$handle = opendir("../srcp")){
 	//注意这里要加一个@，不然会有warning错误提示:)
@@ -523,4 +527,5 @@ foreach($data as $key=>$val){
 }
 return $flag;
 }
+
 ?>
