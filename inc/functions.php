@@ -2,7 +2,7 @@
 /*
 Copyright by Sunplace
 CT:2018/12/17
-MT:2019/5/22
+MT:2019/6/7
 function index：
 1) ls - 遍历文件夹文件，返回一个带索引首字母的二维数组。
 2) getfirstchar - 根据文件名返回索引首字母。
@@ -80,8 +80,10 @@ if(array_null($files)){echo '<div class="red-text" style="padding:1em;margin-top
 <p class="text-center"><small>Nothing.</small></p>
 </div>';}
 else{
-echo ' <div class="switch" style="margin-bottom:30px;"><label>清空<input id="chk_1" type="checkbox"><span class="lever"></span>全选</label><span style="border-right: 2px solid #2196F7;margin:0 30px 0 30px;"></span>';
-					echo ' <label>正选<input id="chk_2" type="checkbox"><span class="lever"></span>反选</label><span style="border-right: 2px solid #2196F7;margin:0 30px 0 30px;"></span><a href="#"><i class="material-icons delall">delete_sweep</i>批量删除</a></div>';
+echo ' <div class="row" style="margin-top:30px;">
+<div class="col s4 center-align"><i class="material-icons slta">select_all</i></div>
+<div class="col s4 center-align"><i class="material-icons swts">swap_calls</i></div>
+<div class="col s4 center-align"><i class="material-icons delall">delete_sweep</i></div></div>';
 }
 			foreach($files as $keys=>$vals){
 				if(!array_null($files[$keys]))

@@ -9,48 +9,35 @@ fopt - 文件操作[s - 保存 ,d - 删除]
 {fname:"file.zip",fopt:"d"} - 删除file.zip
 Copyright by Sunplace
 CT:2019/5/23
-MT:2019/5/27 */
-require('functions.php');
+MT:2019/6/6
+*/
+require('conn.php');
 session_start();
 if(isset($_SESSION['name'])){
-	if(isset($_POST['fopt'])){
-		$fopt = $_POST["fopt"];
-		$path ='';
-			$files = '';
-			$query = "select * from flinfo where fn='".$_POST['fname']."'";
-			$result = mysql_query($query);
-			$row = mysql_fetch_array($result);
-		if($fopt=="d"){
-			//删除
-			
-			if($row['md5fn']==0){
-				$path = 'src';
-				$files = $_POST['fname'];				
+if(isset($_POST['fopt'])){
+	$opt = $_POST['fopt'];
+		switch($opt){
+			case "d": 
+			if(isset($_POST['fname'])){
+				$fn = $_POST['fname'];
+				if(is_array($fn)){
+						foreach($fn as $value){ 
+							unlink("../src/".$value);
+						} 
+					}
+				else{
+					unlink("../src/".$fn);
+				}
+				}		
+			break;
+			case "s": 
+			mysqli_query($con,"set names utf8");
+		$query = "update flinfo set fn = '".$_POST['fnew']."' where fn like '".$_POST['fname']."'";
+		rename(iconv('UTF-8','GBK',"../src/".$_POST['fname']), iconv('UTF-8','GBK',"../src/".$_POST['fnew']));
+		mysqli_query($con,$query);
+			break;
+		default:break;
 			}
-			else{
-				$path = 'srcp';
-				$files = $row['md5fn'];				
-			}
-			unlink(__ROOT__."/".$path."/".$files);
-			mysql_query('delete from flinfo where fn="'.$_POST['fname'].'"');
-			
-			
-	
-		}
-		else{
-			//保存
-			if($_POST['fname']!=$_POST['fnew']){
-				$fnews = $_POST['fnew'];
-				$fnews = str_replace(['/','\\',':','*','"','<','>','|','?','{','}'],'',$fnews);
-				mysql_query("set names utf8");
-				mysql_query("update flinfo set fn='".$fnews."' where fn='".$_POST['fname']."'");
-				if($row['md5fn']==0){
-				rename(iconv('UTF-8','GBK',"../src/".$_POST['fname']), iconv('UTF-8','GBK',"../src/".$fnews));
-			}			
-
-
-			}			
-		}
 	}
 }
 else{
