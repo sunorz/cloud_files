@@ -57,7 +57,7 @@
 		if(name!="" && $("#password").val()!="" && $('.errmsg').text()===''){
 		$(".login").html('<div class="valign-wrapper" style="height:128px;"><div class="valign center" style="width:100%;"><div class="preloader-wrapper active small"><div class="spinner-layer spinner-blue-only"><div class="circle-clipper left"><div class="circle"></div>      </div><div class="gap-patch">  <div class="circle"></div>   </div><div class="circle-clipper right">        <div class="circle"></div>    </div>    </div>  </div><p>登录中...</p></div></div>');
 
-			$.post('../inc/action.php',{username:name,password:pp},function(result){
+			$.post('../inc/action.php',{uname:name,upwd:pp},function(result){
 				if(result!='success')
 					{
 						$(".login").html('<div class="valign-wrapper" style="height:128px;"><div class="valign center" style="width:100%;"><p class="red-text text-lighten-1">登录失败</p><button onclick="javascript:window.location.href=\'/\';" class="btn waves-effect waves-light red" style="border:none;">重新登录<i class="material-icons right">send</i>  </button></div></div>');
@@ -69,8 +69,8 @@
 		   }
 	});
 function logout(){
-	$.post('../inc/action.php',{logout:"yes"},function(result){
-		if(result=='logout'){
+	$.post('../inc/action.php',{action:"logout"},function(result){
+		if(result=='success'){
 			alert("已注销。");
 			window.location.href="/";
 		}

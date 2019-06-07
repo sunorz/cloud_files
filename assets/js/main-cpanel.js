@@ -1,32 +1,52 @@
-//Copyright By Sunplace
+//Copyright By Sunplace 
+
 var countdown=15;
 var t;
 $(function(){
+	 
 	$("body").on("click",".delall",function(){
-		console.log($(".chk:checked").length);
+		var dell = new Array();
+		$(".chk:checked").each(function(){
+			dell.push($(this).parents(".collection-item").find(".truncate").text());
+			});
+			if(dell.length>0){
+				if(confirm("确定要清空数据吗？"))
+				{
+					$.post(
+			"../inc/options.php",
+			{fname:dell,fopt:"d"},
+			function(){M.toast({html: '指定文件已删除！'});});
+				init();
+					
+					}
+				}
+		
 	});
-	$("body").on("click","#chk_1",function(){
+	$("body").on("click",".slta",function(){
 		$(".card").remove();
-		$('.chk').prop('checked',$(this).is(':checked')?true:false);
-		if($(".chk:checked").length==0||$(".chk:checked").length==$(".chk").length){
-			$("#chk_2").attr("disabled","disabled");
-		}
-		else{
-			$("#chk_2").removeAttr("disabled");
-		}
+		if($(this).attr("style")!=null){
+			$(this).removeAttr("style");
+			$(".chk").prop('checked',false);
+			}
+			else{				
+				$(this).css("color","green");
+				$(".chk").prop('checked',true);
+				}
+
 	});
-	$("body").on("click","#chk_2",function(){
-		$(".card").remove();
+	$("body").on("click",".swts",function(){
+		$(".card").remove();					
 		$('.chk').each(function(){
-				$(this).prop('checked',$(this).is(':checked')?false:true);
+
+			$(this).prop('checked',$(this).is(':checked')?false:true);
 			 });
 	});
 	$("body").on("change",".chk",function(){
 		if($(".chk:checked").length==0||$(".chk:checked").length==$(".chk").length){
-$("#chk_2").attr("disabled","disabled");
+$(".swts").hide();
 }
 else{
-	$("#chk_2").removeAttr("disabled");
+	$(".swts").show();
 }
 		
 	});
@@ -38,13 +58,17 @@ else{
         $(this).html('<i class="material-icons left">clear</i>删除');
 	});
 	$("body").on("click",".save",function(){
-		var fnews = $(this).parents(".collection-item").find(".filename").val();
+		var fnews = $(this).parents(".collection-item").find(".filename").val()+$(this).parents(".card").find("i:first").text();
 		if(fnews == "" || $.trim(fnews).length == 0){
 			fnews = $(this).parents(".collection-item").find(".truncate").text();
 		}
-		$.post("../inc/options.php",{fname:$(this).parents(".collection-item").find(".truncate").text(),fnew:fnews,fopt:"s"},function(){M.toast({html: '已更新'});
-		init();
+		$.post("../inc/options.php",{fname:$(this).parents(".collection-item").find(".truncate").text(),fnew:fnews,fopt:"s"},function(result){$(".card").fadeOut();
+		M.toast({html: '已更新'});
+		//init();
+		
 		});
+$(this).parents(".collection-item").find(".truncate").text(fnews);
+$(this).parents(".collection-item").find(".more").show();
 	});
 	$("body").on("click",".del",function(){
 	var obj = $(this);
@@ -95,13 +119,14 @@ else{
 	$(".select").after('<div class="chip"><img src="'+$(this).find("img").attr("src")+'" alt="">'+$(this).text()+'<i class="close material-icons">close</i> </div>');
 	});
 	//tab2
-	$(".tab:eq(2)").click(function(){
-		$.post("../inc/ls.php",{key:"six"},function(result){		
+	$(".tab:eq(1)").click(function(){
+		$.post("../inc/ls.php",{code:"sunplace"},function(result){
 		$("#content2-list").html(result).find("img").each(function(){
 		var str = $(this).attr("class");
 		$(this).attr('src','../assets/imgs/ft-'+str.substring(str.lastIndexOf("-")+1)+'.svg');
 
 		});
+
 		});
 	});	
 });
@@ -154,15 +179,15 @@ function settime(obj) { //倒计时
 		var ul = obj.parents("ul");
 		var li =  obj.parents("li");
 		var fn = li.find(".truncate").text();
-        setTimeout(function(){li.remove();},2000);
+        //setTimeout(function(){li.remove();},2000);
 		if(ul.find("li").length==2){
-			setTimeout(function(){ul.remove();},2000);
+			//setTimeout(function(){ul.remove();},2000);
 		}
 		$.post(
 			"../inc/options.php",
 			{fname:obj.parents(".collection-item").find(".truncate").text(),fopt:"d"},
 			function(result){
-				$(".card").html(result);
+				obj.parents(".collection-item").html(result);
 				M.toast({html: fn+'已删除！'});});
         countdown = 15; 		
         return;
