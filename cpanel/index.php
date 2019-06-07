@@ -59,6 +59,7 @@ else{
 		.switch label input[type=checkbox]:checked+.lever{background-color:#b3e5fc;}
 		.delall{vertical-align: middle;margin-right:0.35em;}
 		.filename{width:80% !important;}
+		.slta:hover,.swts:hover,.delall:hover{color:#f44336;cursor:pointer;}
 	</style>
 <body>
 <header> 
@@ -92,7 +93,7 @@ else{
 	<a href="#" onclick="ls('txt')"><img  src="../assets/imgs/ft-txt.svg">文本文档</a>
 	<a href="#" onclick="ls('unknow')"><img  src="../assets/imgs/ft-unknown.svg">其他文件</a>
 </div>
-<div class="clearfix"></div>		
+<div class="clearfix"></div>	
 <div id="content1-list"><!--List here.--></div></div>
 <!--私密列表-->
 <div id="content2" style="display: none;"><h4>私密列表</h4>
