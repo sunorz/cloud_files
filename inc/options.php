@@ -9,9 +9,10 @@ fopt - 文件操作[s - 保存 ,d - 删除]
 {fname:"file.zip",fopt:"d"} - 删除file.zip
 Copyright by Sunplace
 CT:2019/5/23
-MT:2019/6/6
+MT:2019/6/8
 */
 require('conn.php');
+if(session_status() === PHP_SESSION_NONE)
 session_start();
 if(isset($_SESSION['name'])){
 if(isset($_POST['fopt'])){
