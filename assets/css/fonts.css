@@ -1,0 +1,114 @@
+.material-icons {
+    display: inline-block;
+    vertical-align: middle;
+    transform: translateY(-.1em);
+}
+@font-face {
+  font-family: 'SourceHanSans';
+  font-style: normal;
+  font-weight: 100;
+  src:local('SourceHanSans ExtraLight'), local('SourceHanSans-ExtraLight'), url(../materialize/fonts/sourcehansans/SourceHanSansSC-ExtraLight.woff) format('woff');  
+}
+@font-face {
+  font-family: 'SourceHanSans';
+  font-style: normal;
+  font-weight: 300;
+  src:local('SourceHanSans Light'), local('SourceHanSans-Light'), url(../materialize/fonts/sourcehansans/SourceHanSansSC-Light.woff) format('woff');  
+}
+@font-face {
+  font-family: 'SourceHanSans';
+  font-style: normal;
+  font-weight: 400;
+  src:local('SourceHanSans Normal'), local('SourceHanSans-Normal'), url(../materialize/fonts/sourcehansans/SourceHanSansSC-Normal.woff) format('woff');  
+}
+@font-face {
+  font-family: 'SourceHanSans';
+  font-style: normal;
+  font-weight: 500;
+  src:local('SourceHanSans Regular'), local('SourceHanSans-Regular'), url(../materialize/fonts/sourcehansans/SourceHanSansSC-Regular.woff) format('woff');  
+}
+@font-face {
+  font-family: 'SourceHanSans';
+  font-style: normal;
+  font-weight: 700;
+  src:local('SourceHanSans Medium'), local('SourceHanSans-Medium'), url(../materialize/fonts/sourcehansans/SourceHanSansSC-Medium.woff) format('woff');  
+}
+@font-face {
+  font-family: 'SourceHanSans';
+  font-style: normal;
+  font-weight: 900;
+  src:local('SourceHanSans Heavy'), local('SourceHanSans-Heavy'), url(../materialize/fonts/sourcehansans/SourceHanSansSC-Heavy.woff) format('woff');  
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 100;
+  src: local('Roboto Thin'), local('Roboto-Thin'), url(../materialize/fonts/roboto/Roboto-Thin.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 100;
+  src: local('Roboto ThinItalic'), local('Roboto-ThinItalic'), url(../materialize/fonts/roboto/Roboto-ThinItalic.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  src: local('Roboto Light'), local('Roboto-Light'), url(../materialize/fonts/roboto/Roboto-Light.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 300;
+  src: local('Roboto LightItalic'), local('Roboto-LightItalic'), url(../materialize/fonts/roboto/Roboto-LightItalic.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Roboto Regular'), local('Roboto-Regular'), url(../materialize/fonts/roboto/Roboto-Regular.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Roboto RegularItalic'), local('Roboto-RegularItalic'), url(../materialize/fonts/roboto/Roboto-RegularItalic.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Roboto Medium'), local('Roboto-Medium'), url(../materialize/fonts/roboto/Roboto-Medium.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 500;
+  src: local('Roboto MediumItalic'), local('Roboto-MediumItalic'), url(../materialize/fonts/roboto/Roboto-MediumItalic.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Roboto Bold'), local('Roboto-Bold'), url(../materialize/fonts/roboto/Roboto-Bold.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 700;
+  src: local('Roboto ThinItalic'), local('Roboto-BoldItalic'), url(../materialize/fonts/roboto/Roboto-BoldItalic.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 900;
+  src: local('Roboto Black'), local('Roboto-Black'), url(../materialize/fonts/roboto/Roboto-Black.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 900;
+  src: local('Roboto BlackItalic'), local('Roboto-BlackItalic'), url(../materialize/fonts/roboto/Roboto-BlackItalic.woff2) format('woff2');
+}
+	html{font-family: "Roboto","SourceHanSans";}

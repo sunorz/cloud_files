@@ -1,0 +1,49 @@
+.webuploader-container {
+	position: relative;
+}
+.webuploader-element-invisible {
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+    clip: rect(1px,1px,1px,1px);
+}
+.webuploader-pick {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	padding: 10px 15px;
+	text-align: center;
+	border-radius: 3px;
+	overflow: hidden;
+}
+.remove-this,.pause-this{
+	cursor: pointer;
+}
+.remove-this:hover,.pause-this:hover{
+	color: #f44336;
+}
+
+.webuploader-pick-disable {
+	opacity: 0.6;
+	pointer-events:none;
+}
+.fitem{
+	position: relative;
+	width: 80%;
+	height: 50px;
+	line-height: 50px;
+}
+.fitem span{
+	position: absolute;
+	top: 0;
+	line-height: 50px;
+	left: 0;
+z-index:999;
+margin-left:1em;
+font-weight: bolder;
+}
+.p80{position: absolute;left: 0;height: 50px;width: 80%;}
+.p20{position: absolute;right: 0;height: 50px;width: 20%;}
+.fprogress{position: absolute;top:0;left: 0;width: 30%;background: #b3e5fc;height: 100%;}
+.state{position: absolute;right: 0;width: 20%;}
+#picker{margin-right:1em;margin-top:1em;}
+#ctlBtn{margin-top: 1em;cursor: pointer;}

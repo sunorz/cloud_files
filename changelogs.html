@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Changelogs</title>
+</head>
+<link rel="stylesheet" href="assets/materialize/css/materialize.min.css">	
+<link href="assets/materialize/icon/iconfont/material-icons.css" rel="stylesheet">
+<link href="assets/css/fonts.css" rel="stylesheet">
+<script src="assets/js/jquery-3.1.1.min.js"></script>
+<script src="assets/js/md5.js"></script>
+<script src="assets/materialize/js/materialize.min.js"></script>
+<style>		
+.page-title{font-size:2em;}
+.blue-text{font-weight:600;}
+i{cursor:pointer;}
+span{font-size:0.8em;color:#263238;}
+.blue-text{font-size:1.3em;}
+</style>
+<body>
+	<header> 
+
+        <nav class="top-nav  blue lighten-3" style="height: 122px;line-height: 122px;">	
+			<div class="nav-wrapper" style="padding-left: 1em;">
+				<div class="container">
+					<a href="/" class="page-title"><script>var uri=window.location.host;document.write(uri);</script></a>
+				</div>
+			</div>	
+		</nav>
+
+   </header>
+<main>
+	<div class="container z-depth-2">
+		<h5 class="center-align grey lighten-2" style="padding: 1em 0 1em 0;">Changelogs</h5>
+		<div class="row">
+		<div class="col s4 m2 right-align"><ul><li class="blue-text">v0.7.2</li></ul></div>
+		<div class="col s8 m10"><ul>
+        <li><i class="material-icons">check</i><span> 修复文件删除后报错的问题。（19/6/6）</span></li></ul></div>
+		<div class="col s12 divider"></div>
+		<div class="col s4 m2 right-align"><ul><li class="blue-text">v0.7</li></ul></div>
+		<div class="col s8 m10"><ul>
+        <li><i class="material-icons">check</i><span> 修复私密文件列表不显示的问题。（19/6/6）</span></li>		
+		<li><i class="material-icons">add</i><span> 加入公开文件重命名以及删除操作。（19/6/6）</span></li>
+        <li><i class="material-icons">check</i><span> 修复了文件上传中类型显示和实际不一致的问题。（19/5/23）</span></li></ul></div>
+		<div class="col s12 divider"></div>
+		<div class="col s4 m2 right-align"><ul><li class="blue-text">v0.6.7</li></ul></div>
+		<div class="col s8 m10"><ul>
+		<li><i class="material-icons">check</i><span> 提升响应速度。（19/5/12）</span></li>
+		<li><i class="material-icons">check</i><span> 已登录状态下的首页美化。（19/5/12）</span></li>
+		<li><i class="material-icons">check</i><span> 修复Google Icons不对齐的问题。（19/5/5）</span></li>
+		<li><i class="material-icons">delete_forever</i><span> 删除404页面的过多引用。（19/4/28）</span></li>
+		<li><i class="material-icons">check</i><span> 加快加载速度。（19/4/28）</span></li>
+		<li><i class="material-icons">check</i><span> 修复了私密文件页面在没有文件时，依旧出现表的问题。（19/4/26）</span></li>
+		<li><i class="material-icons">check</i><span> 修复了大文件上传报错问题，最大支持200MB。（19/4/24）</span></li>
+		<li><i class="material-icons">check</i><span> 修复了私密文件更新到数据库的逻辑。（19/3/27）</span></li>
+		<li><i class="material-icons">add</i><span> 增加了上传文件的限制。（19/3/20）</span></li>
+		<li><i class="material-icons">check</i><span> 修改了一些图标。（19/3/20）</span></li>
+		<li><i class="material-icons">add</i><span> 支持上传到私密文件目录。（19/3/19）</span></li>
+		<li><i class="material-icons">check</i><span> 私密文件的重命名规则。（19/3/19）</span></li></ul></div>
+		<div class="col s12 divider"></div>
+		<div class="col s4 m2 right-align"><ul><li class="blue-text">v0.5.5</li></ul></div>
+		<div class="col s8 m10"><ul><li><i class="material-icons">add</i><span> 私密文件下载的等待界面。（19/3/14）</span></li>
+		<li><i class="material-icons">check</i><span> 私密文件的重命名规则。（19/3/14）</span></li>
+		<li><i class="material-icons">check</i><span> 修复在私密文件列表页面直接点击下载文件损坏的问题。（19/3/10）</span></li>
+        <li><i class="material-icons">check</i><span> 修复字体。（19/2/19）</span></li>
+		<li><i class="material-icons">check</i><span> 修复字符串换行引起的布局错乱。（19/1/25）</span></li>
+		<li><i class="material-icons">check</i><span> 修复文件列表显示超时的问题。（19/1/22）</span></li>
+		<li><i class="material-icons">check</i><span> 修复了Roboto字体对中文无效的问题。（19/1/18）</span></li>
+		<li><i class="material-icons">delete_forever</i><span>依靠日期来重命名文件的代码。（19/3/13）</span></li>
+		<li><i class="material-icons">add</i><span> 系统账户密码字段（数据库）。（18/12/29）</span></li>
+		<li><i class="material-icons">add</i><span> 质感设计。（19/1/3）</span></li>
+		<li><i class="material-icons">add</i><span> 登陆、登出。(19/1/3)</li>
+		<li><i class="material-icons">add</i><span> 上传（仅限公开）。(19/1/3)</li>
+		<li><i class="material-icons">check</i><span> POST的参数。（18/12/31）</span></li>
+		<li><i class="material-icons">check</i><span> 布局修改。（19/1/3）</span></li>
+		<li><i class="material-icons">delete_forever</i><span> Bootstrap.（19/1/12）</span></li>
+		<li><i class="material-icons">delete_forever</i><span> Font awesome.（19/1/13）</span></li></ul></div>
+		<div class="col s12 divider"></div>
+		<div class="col s4 m2 right-align"><ul><li class="blue-text">v0.4<br>(Database Ver.)</li></ul></div>
+		<div class="col s8 m10"><ul><li><i class="material-icons">add</i><span> 数据库。（18/12/29）</span></li><li><i class="material-icons">check</i><span> 对应的页面代码修改。（18/12/31）</span></li></ul></div>
+		<div class="col s12 divider"></div>
+		<div class="col s4 m2 right-align"><ul><li class="blue-text">v0.3</li></ul></div>
+		<div class="col s8 m10"><ul><li><i class="material-icons">add</i><span> 公开的文件分享。（18/12/22）</span></li>
+		<li><i class="material-icons">add</i><span> 私密的文件分享。（18/12/24）</span></li>
+		<li><i class="material-icons">add</i><span> 获取私密链接。（18/12/25）</span></li>
+		<li><i class="material-icons">check</i><span> 将函数整合到一个文件。（18/12/22）</span></li></ul></div>
+		<div class="col s12 divider"></div>
+		<div class="col s4 m2 right-align"><ul><li class="blue-text">v0.2.5</li></ul></div>
+		<div class="col s8 m10"><ul><li><i class="material-icons">check</i><span>清除筛选。</span></li>
+		<li><i class="material-icons">check</i><span> 修改了没有文件的状态提示语。</span></li>
+		<li><i class="material-icons">add</i><span> 根据文件类型进行筛选。</span></li>
+		<li><i class="material-icons">check</i><span> 优化函数逻辑（18/12/19）</span></li>
+		<li><i class="material-icons">check</i><span> 采用AJAX进行筛选（18/12/20）</span></li></ul></div>
+		</div>
+	</div>
+</main>
+	<footer><div class="container center-align"><small>Copyright By Sunplace,2018-<script>document.write(new Date().getFullYear('Y'));</script></small></div></footer>
+	<script>$(function(){
+		$("i").each(function(){
+			switch($(this).text()){
+				case "add" : $(this).addClass("green-text text-lighten-2");break;
+				case "check" : $(this).addClass("orange-text text-lighten-2");break;
+				default:$(this).addClass("red-text text-lighten-3");break;
+			}
+		});
+	});
+	</script>
+</body>
+</html>

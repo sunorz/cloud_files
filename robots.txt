@@ -1,0 +1,12 @@
+#
+# robots.txt for dl.kkii.org
+#
+
+User-agent: *
+Disallow: /inc/
+Disallow: /assets/
+Disallow: /s/
+Disallow: /src/
+Disallow: /srcp/
+Disallow: /dbbackup/
+Disallow: /cpanel/
